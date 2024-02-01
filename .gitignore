@@ -1,0 +1,22 @@
+# IDE, System
+.DS_Store
+.idea
+
+# App config
+/AutoWrapperClose_v2/app/config/parameters.yml
+
+# Generated folders
+/AutoWrapperClose_v2/app/*
+/assets/
+/files/appgoonline/src/images/gallery
+/files/appgoonline/src/styles/main.css
+/files/appgoonline/src/styles/main.css.map
+
+
+# Composer package manager
+/composer/
+
+# Global xml
+/*.xml
+
+# Excludes
