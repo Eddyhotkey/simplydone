@@ -28,24 +28,24 @@ Das Ziel ist es, eine Applikation sowie eine Webapplikation zu entwerfen und umz
 
 1. **Registrierung**
 - Ein Besucher kann sich registrieren, um sich einen Account zu erstellen, um unser Produkt nutzen zu können.
-1. **Anmeldung**
+2. **Anmeldung**
 - Als registrierter Benutzer möchte ich mich anmelden können, um auf meine To-Do-Liste zuzugreifen.
 - Als Benutzer möchte ich mich abmelden können, um meinen Account zu schützen.
-1. **Profilverwaltung**
+3. **Profilverwaltung**
 - Als Benutzer möchte ich mein Profil verwalten können, um meine Daten aktuell zu halten.
-1. **Optionen**
+4. **Optionen**
 - Als Benutzer möchte ich meine Darstellung wechseln können, um ein mehr ansprechendes Design zu erhalten.
-1. **Kategorienverwaltung**
+5. **Kategorienverwaltung**
 - Als Benutzer möchte ich neue Kategorien anlegen können oder bestehende bearbeiten oder löschen können, um eine für mich angepasste Kategorisierung für dich zu erhalten.
-1. **To-Do-Verwaltung**
+6. **To-Do-Verwaltung**
 - Als Benutzer möchte ich neue ToDos anlegen oder bestehende ToDos bearbeiten oder löschen können, um meine Aufgaben organisieren zu können.
-1. **Benutzeroberfläche**
+7. **Benutzeroberfläche**
 - Als Benutzer möchte ich eine benutzerfreundliche und intuitive Benutzeroberfläche haben, um das Produkt leicht nutzen zu können.
 - Als Benutzer möchte ich eine barrierefreie Benutzeroberfläche haben, um auch wenn ich eingeschränkt bin, das Produkt bedienen zu können.
-1. **Sicherheit**
+8. **Sicherheit**
 - Als Benutzer möchte, dass meine Daten sicher gespeichert werden.
 - Als Benutzer möchte ich mein Passwort ändern können.
-1. **Leistung**
+9. **Leistung**
 - Als Benutzer möchte ich, dass die App reaktionsschnell ist, auch wenn viele To-Do Einträge vorhanden sind.
 - Als Benutzer möchte ich schnelle Ladezeiten haben.
 
@@ -75,7 +75,7 @@ Das Ziel ist es, eine Applikation sowie eine Webapplikation zu entwerfen und umz
 - Schaltflächen zum Hinzufügen, Bearbeiten und Löschen von To-Do-Einträgen.
 - Filteroptionen nach Kategorie.
 
-**Aktuelle und Allgemeine Aufgaben-Ansicht:**
+**Aktuelle und allgemeine Aufgaben-Ansicht:**
 
 - Liste der aktuellen Aufgaben.
 - Liste der anstehenden Aufgaben.
@@ -88,7 +88,7 @@ Das Ziel ist es, eine Applikation sowie eine Webapplikation zu entwerfen und umz
 
 **Zuverlässige Datenbereitstellung**
 
-Die Daten sollen reibungslos zwischen den den Anwendungen synchronisiert werden können.
+- Die Daten sollen reibungslos zwischen den den Anwendungen synchronisiert werden können.
 
 **Reibungsloser Ablauf bei der Erstellung von ToDos**
 
@@ -96,11 +96,11 @@ ToDos sollen einfach anzulegen sein und ohne Komplikationen im System aufgenomme
 
 **Barrierefreiheit**
 
-Die Anwendungen sollen für alle Menschen zugänglich sein.
+- Die Anwendungen sollen für alle Menschen zugänglich sein.
 
 **Datensicherheit**
 
-Daten sollen sicher gespeichert werden, unzugänglich für Dritte.
+- Daten sollen sicher gespeichert werden, unzugänglich für Dritte.
 
 ## **Test- und Validierungsanforderungen**
 
@@ -112,8 +112,8 @@ Daten sollen sicher gespeichert werden, unzugänglich für Dritte.
 
 **Technologische Unsicherheit**
 
-Risiko, dass das Projekt nicht die gewünschte Leistungsfähigkeit oder Skalierbarkeit bietet.
+- Risiko, dass das Projekt nicht die gewünschte Leistungsfähigkeit oder Skalierbarkeit bietet.
 
 **Plattform- und Gerätekompatibilität**
 
-Risiko, dass das Projekt nicht auf allen gewünschten Plattformen reibungslos funktioniert, in Bezug auf Responsivität.
+- Risiko, dass das Projekt nicht auf allen gewünschten Plattformen reibungslos funktioniert, in Bezug auf Responsivität.
