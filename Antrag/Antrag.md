@@ -88,7 +88,7 @@ Das Ziel ist es, eine Applikation sowie eine Webapplikation zu entwerfen und umz
 
 **Zuverlässige Datenbereitstellung**
 
-- Die Daten sollen reibungslos zwischen den den Anwendungen synchronisiert werden können.
+- Die Daten sollen reibungslos zwischen den Anwendungen synchronisiert werden können.
 
 **Reibungsloser Ablauf bei der Erstellung von ToDos**
 
