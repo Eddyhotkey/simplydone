@@ -1,0 +1,136 @@
+<mxfile host="app.diagrams.net" modified="2024-02-05T09:04:35.441Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="OUO_gWIgU1akMVJ-rhYT" version="23.1.1" type="device">
+  <diagram name="Seite-1" id="e2dhDYWPwq4B96d2uhu8">
+    <mxGraphModel dx="1167" dy="696" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="100" width="630" height="590" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-24" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" target="qH2LjV1pGE-CIEt-mXnt-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="200" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-27" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" target="qH2LjV1pGE-CIEt-mXnt-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="250" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-31" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" target="qH2LjV1pGE-CIEt-mXnt-14">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="290" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-1" value="Benutzer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="200" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-3" value="ToDo Applikation" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="320" y="100" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-4" target="qH2LjV1pGE-CIEt-mXnt-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-4" value="registrieren" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="155" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-28" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-5" target="qH2LjV1pGE-CIEt-mXnt-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-29" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-5" target="qH2LjV1pGE-CIEt-mXnt-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-43" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-5" target="qH2LjV1pGE-CIEt-mXnt-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-44" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-5" target="qH2LjV1pGE-CIEt-mXnt-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-45" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-5" target="qH2LjV1pGE-CIEt-mXnt-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-5" value="anmelden" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="320" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-32" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-6" target="qH2LjV1pGE-CIEt-mXnt-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-6" value="ToDo erstellen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="295" y="240" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-7" value="Registrierung verifizieren" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="150" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-35" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-8" target="qH2LjV1pGE-CIEt-mXnt-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-8" value="ToDo editieren" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="280" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-9" value="ToDo löschen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="330" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-10" value="Kategorie erstellen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="310" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-11" value="ToDo einer Kategorie hinzufügen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="180" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-12" value="Kategorie editieren" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="370" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-13" value="Kategorie löschen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="430" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-14" value="abmelden" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="450" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-36" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-15" target="qH2LjV1pGE-CIEt-mXnt-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-37" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-15" target="qH2LjV1pGE-CIEt-mXnt-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-38" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-15" target="qH2LjV1pGE-CIEt-mXnt-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-15" value="Kategorien verwalten" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="384" y="390" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-16" value="Email ändern" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="490" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-17" value="Passwort ändern" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="550" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-18" value="Name ändern" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="610" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-39" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-19" target="qH2LjV1pGE-CIEt-mXnt-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-40" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-19" target="qH2LjV1pGE-CIEt-mXnt-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-41" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-19" target="qH2LjV1pGE-CIEt-mXnt-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-19" value="Profil verwalten" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="384" y="490" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-21" value="Theme ändern" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="530" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-33" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-23" target="qH2LjV1pGE-CIEt-mXnt-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-34" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="qH2LjV1pGE-CIEt-mXnt-23" target="qH2LjV1pGE-CIEt-mXnt-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qH2LjV1pGE-CIEt-mXnt-23" value="ToDo öffnen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="300" width="100" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
