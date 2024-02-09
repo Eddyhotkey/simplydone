@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="192.0" layoutY="103.0" text="ANMELDEN">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="282.0" layoutX="193.0" layoutY="171.0" stroke="BLACK" strokeType="OUTSIDE" styleClass="form--lage--container" width="395.0" />
+      <TextField layoutX="227.0" layoutY="206.0" prefHeight="48.0" prefWidth="327.0" promptText="Email" styleClass="form--lage--textfield" />
+      <TextField layoutX="227.0" layoutY="270.0" prefHeight="48.0" prefWidth="327.0" promptText="Passwort" styleClass="form--lage--textfield" />
+      <Button layoutX="275.0" layoutY="337.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="232.0" styleClass="form--lage--submit" text="Anmelden" textFill="WHITE" />
+      <Label layoutX="316.0" layoutY="387.0" text="Sie haben noch kein Konto?" />
+      <Button layoutX="329.0" layoutY="404.0" mnemonicParsing="false" styleClass="form--lage--submit-no-outline" text="Registrieren Sie sich" textFill="#f79e89" underline="true" />
+   </children>
+</AnchorPane>
