@@ -1,0 +1,21 @@
+.form--lage--container {
+  -fx-background-radius: 50px;
+  -fx-hgap: 20px;
+  -fx-wgap: 20px;
+  -fx-padding: 40px;
+  -fx-border-radius: 25px;
+  -fx-border-width: 1px;
+  -fx-border-color: black;
+}
+.form--lage--container .form--lage--textfield {
+  -fx-background-radius: 25px;
+}
+.form--lage--container .form--lage--submit {
+  -fx-color: rgb(50, 50, 50);
+  -fx-alignment: center;
+}
+.form--lage--container .form--lage--submit-no-outline {
+  -fx-alignment: center;
+}
+
+/*# sourceMappingURL=base.css.map */
