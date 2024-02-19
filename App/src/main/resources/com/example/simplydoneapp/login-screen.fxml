@@ -20,7 +20,7 @@
             <TextField fx:id="formLagePassword" prefHeight="48.0" prefWidth="327.0" promptText="Passwort" styleClass="form--lage--textfield" />
             <Button fx:id="formLageSubmit" mnemonicParsing="false" onAction="#actLageSubmit" prefHeight="40.0" prefWidth="232.0" styleClass="form--lage--submit" text="Anmelden" textFill="WHITE" />
             <Label text="Sie haben noch kein Konto?" />
-            <Button fx:id="formLageRegister" mnemonicParsing="false" onAction="#actLageRegister" styleClass="form--lage--submit-no-outline" text="Registrieren Sie sich" textFill="#f79e89" underline="true" />
+            <Button fx:id="formLageRegister" mnemonicParsing="false" onAction="#actLageRegister" styleClass="form--lage--link" text="Registrieren Sie sich" textFill="#f79e89" underline="true" />
          </children>
       </VBox>
    </children>
