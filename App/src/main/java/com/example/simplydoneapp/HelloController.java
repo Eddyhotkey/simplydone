@@ -1,5 +1,7 @@
 package com.example.simplydoneapp;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,14 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.awt.Desktop;
 import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -28,10 +27,12 @@ public class HelloController {
     public Button formLageRegister;
     public TextField formLageEmail;
     public TextField formLagePassword;
-    public Label dummy;
+    public Label errorLabel;
 
+    OkHttpClient client = new OkHttpClient();
 
     public void actLageSubmit(ActionEvent actionEvent) throws IOException {
+        errorLabel.setText("");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("start-screen.fxml"));
         Parent secondSceneRoot = loader.load();
         Scene secondScene = new Scene(secondSceneRoot);
@@ -42,52 +43,48 @@ public class HelloController {
         String user = formLageEmail.getText();
         String password = formLagePassword.getText();
 
-        String apiUrl = "http:localhost:1337/users/check-credential";
-        String apiString = "?username=" + user;
-
-        apiUrl += apiString;
-        try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "text/plain");
-            connection.setDoOutput(true);
-
-
-
-            try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = apiString.getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
-            }
-
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
-                StringBuilder response = new StringBuilder();
-                String responseLine;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
-                }
-
-                dummy.setText(response.toString());
-            }
-
-            connection.disconnect();
-        } catch (Exception e) {
-            e.fillInStackTrace();
+        if(formLageEmail.getText().isEmpty() || formLagePassword.getText().isEmpty()) {
+            errorLabel.setText("Fehlerhafte Eingaben!");
+            return;
         }
 
-        if(Objects.equals(user, "test")) {
-            if(Objects.equals(password, "123")) {
-                currentStage.setScene(secondScene);
+        String apiUrl = "http:localhost:8080/users/check-credential?username=" + user;
+        Request request = new Request.Builder()
+                .url(apiUrl)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+
+            if (response.isSuccessful()) {
+                String responseBody = response.body().string();
+
+                if(!responseBody.isEmpty()) {
+                    Gson gson = new Gson();
+                    JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+
+                    if(Objects.equals(password, jsonObject.get("Passwort").getAsString())) {
+                        currentStage.setScene(secondScene);
+                    } else {
+                        errorLabel.setText("Passwort ist nicht korrekt!");
+                    }
+                } else {
+                    errorLabel.setText("Benutzername ist nicht korrekt!");
+                }
+            } else {
+                int statusCode = response.code();
+                String responseBody = response.body().string();
+                errorLabel.setText("Anmeldung derzeit nicht möglich!");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void actLageRegister(ActionEvent actionEvent) {
         String url = "https://simplydone.bairamov.de/?registering=true";
 
-        try {
-            Desktop.getDesktop().browse(new URI(url));
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
+        WebDriver driver = new ChromeDriver();
+        driver.get(url);
+        driver.quit();
     }
 }
