@@ -59,7 +59,7 @@ router.get('/check-credential', async (req, res) => {
         return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
     }
     let response = await get_password_by_username(conn, username);
-    res.send(response[0].Passwort);
+    res.send(response[0]);
     conn.close();
 });
 
