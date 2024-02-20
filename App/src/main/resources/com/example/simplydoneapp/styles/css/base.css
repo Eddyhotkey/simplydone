@@ -14,8 +14,13 @@
   -fx-color: rgb(50, 50, 50);
   -fx-alignment: center;
 }
-.form--lage--container .form--lage--submit-no-outline {
+.form--lage--container .form--lage--link {
   -fx-alignment: center;
+}
+
+.error--label {
+  -fx-text-fill: tomato;
+  -fx-alignment: CENTER;
 }
 
 /*# sourceMappingURL=base.css.map */
