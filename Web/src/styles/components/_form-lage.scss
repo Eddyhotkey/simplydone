@@ -1,0 +1,76 @@
+.form-lage {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: rem-calc( 30px );
+	border: rem-calc( 2px ) solid $lage;
+	border-radius: rem-calc( $main-b-radius );
+
+	&--textfield-container {
+		position: relative;
+		width: 100%;
+	}
+
+	&--textfield {
+		width: 100%;
+		margin-bottom: rem-calc( 16px );
+		padding: rem-calc( 10px ) rem-calc( 16px );
+		border-radius: $main-b-radius;
+		border: rem-calc( 1px ) solid $herford;
+		color: $herford;
+	}
+
+	&--pass-on {
+		display: block;
+		position: absolute;
+		top: 50%;
+		right: rem-calc( 10px );
+		width: rem-calc( 24px );
+		height: rem-calc( 24px );
+		margin-top: rem-calc( -20px );
+		background-color: transparent;
+		background-image: url("../images/svg/eye.svg");
+		border: none;
+		box-shadow: none;
+		z-index: 10;
+	}
+	&--pass-off {
+		display: block;
+		position: absolute;
+		top: 50%;
+		right: rem-calc( 10px );
+		width: rem-calc( 24px );
+		height: rem-calc( 24px );
+		margin-top: rem-calc( -20px );
+		background-color: transparent;
+		background-image: url("../images/svg/eye-off.svg");
+		border: none;
+		box-shadow: none;
+		z-index: 10;
+	}
+
+	&--submit {
+		@include main-button;
+	}
+
+	&--submit {
+		margin-bottom: rem-calc(10px);
+	}
+
+	&--info {
+		font-size: rem-calc( 12px );
+		color: $herford;
+	}
+
+	&--link {
+		color: $lage;
+		transition-duration: .3s;
+		&:hover {
+			color: $bad_salzuflen;
+			transition-duration: .3s;
+		}
+	}
+
+
+}

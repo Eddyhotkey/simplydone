@@ -1,0 +1,15 @@
+.app {
+	height: 100%;
+
+	.container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+	}
+
+	&-title {
+		@include main_title;
+		margin-bottom: rem-calc(32px);
+	}
+}
