@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Anmeldung</title>
+  <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <div class="header-logo-container">
+      <img src="src/images/svg/main_logo.svg" alt="Logo SimplyDone" class="header-logo">
+    </div>
+    <nav class="navigation">
+      <ul class="navigation-list">
+        <li class="navigation-item">
+          <a href="#" class="navigation-link">
+            <a href="#" class="navigation-link">
+              <img src="../src/images/svg/log-out.svg" alt="Sich abmelden Icon">
+            </a>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main>
+
+</main>
+<div class="app" id="app">
+  <div class="container">
+    <div class="form-lage--container" v-if="!loggedIn && !registering">
+      <h1 class="app-title" >Sich Anmelden!</h1>
+      <form class="form-lage" @submit.prevent="login" >
+        <label class="visually-hidden" for="username">E-Mail:</label>
+        <input placeholder="E-Mail" type="text"  class="form-lage--textfield" id="username" v-model="username">
+        <label class="visually-hidden" for="password">Passwort:</label>
+        <input placeholder="Passwort:" class="form-lage--textfield" type="password" id="password" v-model="password">
+        <button class="form-lage--submit" type="submit">Anmelden</button>
+        <p class="form-lage--info">Sie haben noch kein Konto? <a class="form-lage--link" href="#"
+                                          @click.prevent="showRegistrationForm">Registrieren Sie
+          sich</a></p>
+      </form>
+    </div>
+    <div class="form-lage--container" v-else-if="registering">
+      <h1 class="app-title" >Sich Registrieren!</h1>
+      <form class="form-lage" @submit.prevent="register">
+
+        <label class="visually-hidden" for="newMail">E-Mail</label>
+        <input class="form-lage--textfield" type="text" id="newMail" v-model="newMail" placeholder="E-Mail">
+        <label class="visually-hidden" for="newUsername">Vorname:</label>
+        <input class="form-lage--textfield" type="text" id="newUsername" v-model="newUsername" placeholder="Vorname">
+        <label class="visually-hidden" for="newUserSurname">Nachname</label>
+        <input class="form-lage--textfield" type="text" id="newUserSurname" v-model="newUserSurname"
+               placeholder="Nachname" >
+        <div class="form-lage--textfield-container">
+          <label class="visually-hidden" for="newPassword">Passwort:</label>
+          <input class="form-lage--textfield form-lage--pass" type="password" id="newPassword" v-model="newPassword"
+                 placeholder="Passwort">
+          <button class="form-lage--pass-on"></button>
+        </div>
+        <div class="form-lage--textfield-container">
+          <input class="form-lage--textfield form-lage--pass" type="password" id="confirmPassword"
+                 v-model="confirmPassword"
+                 placeholder="Passwort bestätigen" @input="togglePasswordVisibility('confirmPassword')">
+          <button class="form-lage--pass-on" @click="togglePasswordVisibility('confirmPassword')"></button>
+        </div>
+        <button class="form-lage--submit" type="submit">Registrieren</button>
+        <p class="form-lage--info" >Haben Sie bereits ein Konto? <a class="form-lage--link" href="#" @click.prevent="showLoginForm">Anmelden
+        </a></p>
+      </form>
+    </div>
+    <div class="form-lage--container" v-else>
+      <p>Sie haben sich erfolgreich eingeloggt!</p>
+    </div>
+  </div>
+</div>
+<footer>
+
+</footer>
+<script src="src/vendors/vue/vue.js"></script>
+<script src="src/scripts/scripts.js"></script>
+</body>
+</html>

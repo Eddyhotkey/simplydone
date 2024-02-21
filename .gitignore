@@ -20,3 +20,5 @@
 /*.xml
 
 # Excludes
+/Web/src/styles/vendors/*
+/Web/src/vendors/*
