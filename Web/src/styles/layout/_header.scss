@@ -1,0 +1,36 @@
+.header {
+	margin-bottom: rem-calc( 30px );
+	padding: rem-calc( 20px ) 0;
+	.container {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	&-logo {
+		@include media-breakpoint-up( lg ) {
+			width: rem-calc( 300px );
+		}
+	}
+	.navigation {
+		&-list {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		&-item {
+			margin-right: rem-calc( 20px );
+			transition-duration: .3s;
+			&:hover {
+				transform: scale( .9 );
+				transition-duration: .3s;
+			}
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}

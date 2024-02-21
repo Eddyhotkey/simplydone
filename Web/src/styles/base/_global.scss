@@ -1,0 +1,11 @@
+html {
+	height: 100%;
+}
+body {
+	max-width: rem-calc( 1920px );
+	height: 100%;
+	margin: 0 auto;
+	font-family: "Montserrat", sans-serif;
+	font-weight: 400;
+	font-size: rem-calc( 16px );
+}

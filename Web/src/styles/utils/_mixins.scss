@@ -1,0 +1,13 @@
+@mixin main_button {
+	padding: rem-calc( 10px ) rem-calc( 50px );
+	background-color: $lage;
+	box-shadow: none;
+	border: none;
+	border-radius: $main-b-radius;
+	color: $detmold;
+	transition-duration: .3s;
+	&:hover {
+		background-color: $bad_salzuflen;
+		transition-duration: .3s;
+	}
+}
