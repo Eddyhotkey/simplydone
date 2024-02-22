@@ -97,7 +97,7 @@ async function check_user_availability(conn, username) {
 }
 async function get_password_by_username(conn, username) {
     try {
-        const data = await conn.query("SELECT Passwort FROM Benutzer WHERE Username = ?", [username]);
+        const data = await conn.query("SELECT UserID, Passwort FROM Benutzer WHERE Username = ?", [username]);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);
