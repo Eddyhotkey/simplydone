@@ -1,3 +1,8 @@
+.error--label {
+  -fx-text-fill: tomato;
+  -fx-alignment: CENTER;
+}
+
 .form--lage--container {
   -fx-background-radius: 50px;
   -fx-hgap: 20px;
@@ -11,7 +16,7 @@
   -fx-background-radius: 8px;
   -fx-background-color: none;
   -fx-border-radius: 8px;
-  -fx-border-color: #949494;
+  -fx-border-color: #f2f2f2;
   -fx-padding: 10px 16px 10px 16px;
 }
 .form--lage--container .form--lage--submit {
@@ -30,9 +35,19 @@
   -fx-text-fill: #F79E89;
 }
 
-.error--label {
-  -fx-text-fill: tomato;
-  -fx-alignment: CENTER;
+.dashboard--container {
+  -fx-background-color: #fff;
+}
+.dashboard--container--left {
+  -fx-background-color: #fff;
+}
+.dashboard--container--right {
+  -fx-background-color: #fff;
+}
+.dashboard--background {
+  -fx-background-color: #f2f2f2;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
 }
 
 /*# sourceMappingURL=base.css.map */

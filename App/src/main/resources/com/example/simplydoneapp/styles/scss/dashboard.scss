@@ -1,0 +1,17 @@
+.dashboard {
+  &--container {
+    -fx-background-color: $light-color;
+
+    &--left {
+      -fx-background-color: $light-color;
+    }
+    &--right {
+      -fx-background-color: $light-color;
+    }
+  }
+  &--background {
+    -fx-background-color: $grey-color;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+  }
+}
