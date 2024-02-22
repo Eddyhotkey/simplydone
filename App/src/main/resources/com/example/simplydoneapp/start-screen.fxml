@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.3333333333333333" mouseTransparent="true" prefHeight="1042.0" prefWidth="1457.0" styleClass="dashboard--container" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simplydoneapp.Startscreen">
+<SplitPane dividerPositions="0.3333333333333333" prefHeight="1042.0" prefWidth="1457.0" styleClass="dashboard--container" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simplydoneapp.Startscreen">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1040.0" prefWidth="501.0" styleClass="dashboard--container--left">
          <children>
@@ -40,7 +40,7 @@
       </AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="dashboard--container--right">
          <children>
-            <SplitPane dividerPositions="0.5" layoutX="18.0" layoutY="73.0" mouseTransparent="true" prefHeight="932.0" prefWidth="932.0" styleClass="dashboard--background">
+            <SplitPane dividerPositions="0.5" layoutX="18.0" layoutY="73.0" prefHeight="932.0" prefWidth="932.0" styleClass="dashboard--background">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="905.0" prefWidth="622.0">
