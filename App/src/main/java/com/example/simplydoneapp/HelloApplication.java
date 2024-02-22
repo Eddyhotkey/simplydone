@@ -2,17 +2,29 @@ package com.example.simplydoneapp;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-screen.fxml"));
+        FXMLLoader loginLoader = new FXMLLoader(HelloApplication.class.getResource("login-screen.fxml"));
+        Parent loginRoot = loginLoader.load();
+        Loginscreen loginscreen = loginLoader.getController();
         //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("start-screen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+
+        FXMLLoader startLoader = new FXMLLoader(HelloApplication.class.getResource("start-screen.fxml"));
+        Startscreen startRoot = startLoader.load();
+
+        Startscreen startscreen = startLoader.getController();
+
+
+
+        Scene scene = new Scene(loginRoot);
         scene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
         stage.setTitle("simplyDone");
         stage.setScene(scene);
