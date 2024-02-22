@@ -3,19 +3,31 @@
   -fx-hgap: 20px;
   -fx-wgap: 20px;
   -fx-padding: 40px;
-  -fx-border-radius: 25px;
+  -fx-border-radius: 8px;
   -fx-border-width: 1px;
-  -fx-border-color: black;
+  -fx-border-color: #F76C6A;
 }
 .form--lage--container .form--lage--textfield {
-  -fx-background-radius: 25px;
+  -fx-background-radius: 8px;
+  -fx-background-color: none;
+  -fx-border-radius: 8px;
+  -fx-border-color: #949494;
+  -fx-padding: 10px 16px 10px 16px;
 }
 .form--lage--container .form--lage--submit {
-  -fx-color: rgb(50, 50, 50);
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+  -fx-color: #F76C6A;
   -fx-alignment: center;
+  -fx-text-fill: #fff;
+  -fx-padding: 16px;
 }
 .form--lage--container .form--lage--link {
-  -fx-alignment: center;
+  -fx-background-radius: 8px;
+  -fx-background-color: none;
+  -fx-border-radius: 0;
+  -fx-border-style: none;
+  -fx-text-fill: #F79E89;
 }
 
 .error--label {

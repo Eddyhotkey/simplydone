@@ -16,8 +16,8 @@ import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -48,7 +48,7 @@ public class HelloController {
             return;
         }
 
-        String apiUrl = "http:localhost:8080/users/check-credential?username=" + user;
+        String apiUrl = "http:localhost:1337/users/check-credential?username=" + user;
         Request request = new Request.Builder()
                 .url(apiUrl)
                 .build();
@@ -83,8 +83,22 @@ public class HelloController {
     public void actLageRegister(ActionEvent actionEvent) {
         String url = "https://simplydone.bairamov.de/?registering=true";
 
-        WebDriver driver = new ChromeDriver();
-        driver.get(url);
-        driver.quit();
+        String os = System.getProperty("os.name").toLowerCase();
+
+        if(os.contains("windows")){
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.browse(new URI(url));
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }else{
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                runtime.exec("xdg-open " + url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
