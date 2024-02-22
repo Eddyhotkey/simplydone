@@ -63,6 +63,7 @@ public class HelloController {
                     JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
 
                     if(Objects.equals(password, jsonObject.get("Passwort").getAsString())) {
+                        Startscreen startscreen = new Startscreen(jsonObject.get("UserID").getAsInt());
                         currentStage.setScene(secondScene);
                     } else {
                         errorLabel.setText("Passwort ist nicht korrekt!");
