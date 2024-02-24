@@ -1,0 +1,23 @@
+$primary-color: #F76C6A;
+$primary-light: #F79E89;
+$grey-color: #f2f2f2;
+$light-color: #fff;
+$dark-color: #272727;
+
+@font-face {
+  font-family: Montserrat;
+  src: url('../fonts/Montserrat-VariableFont_wght.ttf');
+}
+@font-face {
+  font-family: Bebas Neue Regular;
+  src: url('../fonts/BebasNeue-Regular.ttf');
+}
+
+.root {
+  label {
+    -fx-font-family: 'Montserrat';
+  }
+  .h1Title {
+    -fx-font-family: 'Bebas Neue Regular';
+  }
+}
