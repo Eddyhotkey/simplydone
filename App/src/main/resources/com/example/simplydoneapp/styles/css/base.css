@@ -1,3 +1,18 @@
+@font-face {
+  font-family: Montserrat;
+  src: url("../fonts/Montserrat-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: Bebas Neue Regular;
+  src: url("../fonts/BebasNeue-Regular.ttf");
+}
+.root label {
+  -fx-font-family: "Montserrat";
+}
+.root .h1Title {
+  -fx-font-family: "Bebas Neue Regular";
+}
+
 .error--label {
   -fx-text-fill: tomato;
   -fx-alignment: CENTER;

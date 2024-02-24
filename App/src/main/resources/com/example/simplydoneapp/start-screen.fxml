@@ -18,7 +18,7 @@
    <children>
       <AnchorPane prefHeight="700.0" prefWidth="400.0" styleClass="dashboard--container--left">
          <children>
-            <ImageView fitHeight="40.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="233.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/Logo_simplyDone.png" />
                </image>
@@ -78,13 +78,13 @@
                         <VBox prefHeight="550.0" prefWidth="750.0" />
                         <VBox prefHeight="550.0" prefWidth="750.0">
                            <children>
-                              <Label prefHeight="39.0" prefWidth="330.0" styleClass="h1Title" text="Fällig heute">
+                              <Label prefHeight="62.0" prefWidth="384.0" styleClass="h1Title" text="Fällig heute">
                                  <font>
                                     <Font size="42.0" />
                                  </font>
                               </Label>
                               <VBox fx:id="vboxDueToday" prefHeight="500.0" prefWidth="100.0" />
-                              <Label prefHeight="39.0" prefWidth="330.0" styleClass="h1Title" text="Fällig heute">
+                              <Label prefHeight="62.0" prefWidth="383.0" styleClass="h1Title" text="Andere Aufgaben">
                                  <font>
                                     <Font size="42.0" />
                                  </font>
