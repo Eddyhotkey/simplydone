@@ -63,6 +63,18 @@ router.get('/check-credential', async (req, res) => {
     conn.close();
 });
 
+router.get('/get-user-data', async (req, res) => {
+    const userid = req.query.userid;
+    const conn = await dbConnection();
+
+    if (!userid) {
+        return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
+    }
+    let response = await getUserData(conn, userid);
+    res.send(response[0]);
+    conn.close();
+});
+
 router.get('/all_users', async (req, res) => {
     const conn = await dbConnection();
     var rows = await get_all_user(conn);
@@ -89,6 +101,16 @@ async function get_all_user(conn) {
 async function check_user_availability(conn, username) {
     try {
         const data = await conn.query("SELECT Username FROM Benutzer WHERE Username = ?", [username]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function getUserData(conn, userid) {
+    try {
+        const data = await conn.query("SELECT Username, Vorname, Nachname, Email, Profilbild FROM Benutzer WHERE UserID = ?", [userid]);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);
