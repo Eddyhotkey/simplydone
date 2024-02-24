@@ -3,6 +3,26 @@
   -fx-alignment: CENTER;
 }
 
+.button--top-bar .button--exit {
+  -fx-padding: 0 0 0 24px;
+}
+.button--image {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+.button--image--round {
+  -fx-border-radius: 25px;
+  -fx-background-radius: 25px;
+}
+.button--image--square {
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+}
+.button--image:hover {
+  -fx-scale-y: 1.05;
+  -fx-scale-x: 1.05;
+}
+
 .form--lage--container {
   -fx-background-radius: 50px;
   -fx-hgap: 20px;
