@@ -44,10 +44,10 @@ public class Loginscreen {
         }
 
         String apiUrl = "http:localhost:1337/users/check-credential?username=" + user;
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .build();
         try {
+            Request request = new Request.Builder()
+                    .url(apiUrl)
+                    .build();
             Response response = client.newCall(request).execute();
 
             if (response.isSuccessful()) {
@@ -72,6 +72,7 @@ public class Loginscreen {
                 errorLabel.setText("Anmeldung derzeit nicht möglich!");
             }
         } catch (Exception e) {
+            errorLabel.setText("Anmeldung derzeit nicht möglich!");
             e.printStackTrace();
         }
     }
@@ -115,6 +116,7 @@ public class Loginscreen {
             startscreen.setLoginscreen(this);
 
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
             activStage.setScene(scene);
             activStage.show();
         } catch (IOException e) {

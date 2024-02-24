@@ -2,3 +2,29 @@
   -fx-text-fill: tomato;
   -fx-alignment: CENTER;
 }
+
+.button {
+  &--top-bar {
+    .button--exit {
+      -fx-padding: 0 0 0 24px;
+    }
+  }
+  &--image {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    &--round {
+      -fx-border-radius: 25px;
+      -fx-background-radius: 25px;
+    }
+    &--square {
+      -fx-border-radius: 8px;
+      -fx-background-radius: 8px;
+    }
+    &:hover {
+      -fx-scale-y: 1.05;
+      -fx-scale-x: 1.05;
+    }
+  }
+}
+
+

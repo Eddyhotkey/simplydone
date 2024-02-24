@@ -62,7 +62,7 @@ public class Startscreen {
                         lblProfileMail.setText(jsonObject.get("Email").getAsString());
                     }
                     if(!jsonObject.get("Profilbild").isJsonNull()) {
-                        lblProfileMail.setText(jsonObject.get("Profilbild").getAsString());
+                        //lblProfileMail.setText(jsonObject.get("Profilbild").getAsString());
                     }
                 }
             } else {
