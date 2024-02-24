@@ -62,7 +62,7 @@
               </items>
             </SplitPane>
             <Button fx:id="btnExit" layoutX="898.0" layoutY="23.0" mnemonicParsing="false" onAction="#actBtnExit" text="Exit" />
-            <Button layoutX="805.0" layoutY="23.0" mnemonicParsing="false" text="New" />
+            <Button fx:id="btnNewTodo" layoutX="805.0" layoutY="23.0" mnemonicParsing="false" onAction="#actNewTodo" text="New" />
          </children>
       </AnchorPane>
   </items>
