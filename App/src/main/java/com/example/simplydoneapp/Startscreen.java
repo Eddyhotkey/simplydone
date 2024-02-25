@@ -3,14 +3,18 @@ package com.example.simplydoneapp;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.w3c.dom.Text;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Startscreen {
@@ -20,6 +24,7 @@ public class Startscreen {
     public Label lblProfileLastname;
     public Label lblProfileMail;
     public Label lblGreeting;
+    public Button btnNewTodo;
     int userID = 1;
     private Loginscreen loginscreen;
 
@@ -81,7 +86,55 @@ public class Startscreen {
 
 
     public void actNewTodo(ActionEvent actionEvent) {
-        dummy.setText(String.valueOf(userID));
+        Stage todoPopup = new Stage();
+        Stage currentStage = (Stage) btnNewTodo.getScene().getWindow();
+        todoPopup.initOwner(currentStage);
+
+        VBox todoPopupContainer = new VBox(15);
+        todoPopupContainer.getStyleClass().add("task--create--container");
+
+        Label newLabel = new Label("Neues Todo");
+        newLabel.getStyleClass().add("h1Title");
+        todoPopupContainer.getChildren().add(newLabel);
+
+        TextField newTitle = new TextField();
+        newTitle.getStyleClass().add("form--widget");
+        newTitle.setPromptText("Titel");
+        todoPopupContainer.getChildren().add(newTitle);
+
+        TextArea newDescripton = new TextArea();
+        newDescripton.getStyleClass().add("form--widget");
+        newDescripton.getStyleClass().add("form--widget--special-input");
+        newDescripton.setPromptText("Beschreibung");
+        todoPopupContainer.getChildren().add(newDescripton);
+
+        DatePicker newDate = new DatePicker();
+        newDate.getStyleClass().add("form--widget");
+        newDate.getStyleClass().add("form--widget--special-input");
+        newDate.setPromptText(new Date().toString());
+        newDate.setMaxWidth(Double.MAX_VALUE);
+        todoPopupContainer.getChildren().add(newDate);
+
+        TextField newKategory = new TextField();
+        newKategory.getStyleClass().add("form--widget");
+        newKategory.setPromptText("Kategorie");
+        todoPopupContainer.getChildren().add(newKategory);
+
+        TextField newPriority = new TextField();
+        newPriority.getStyleClass().add("form--widget");
+        newPriority.setPromptText("Priorität");
+        todoPopupContainer.getChildren().add(newPriority);
+
+        Button newSubmit = new Button("Todo hinzufügen");
+        newSubmit.setMaxWidth(Double.MAX_VALUE);
+        newSubmit.getStyleClass().add("form--submit");
+        todoPopupContainer.getChildren().add(newSubmit);
+
+        Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
+        todoPopupScene.getStylesheets().clear();
+        todoPopupScene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
+        todoPopup.setScene(todoPopupScene);
+        todoPopup.show();
     }
 }
 
