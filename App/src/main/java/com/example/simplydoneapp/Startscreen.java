@@ -14,8 +14,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.w3c.dom.Text;
 
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.Objects;
 
 public class Startscreen {
     public Label dummy;
@@ -25,6 +25,10 @@ public class Startscreen {
     public Label lblProfileMail;
     public Label lblGreeting;
     public Button btnNewTodo;
+    public Label taskTitle;
+    public Label taskPriority;
+    public Label taskDueDay;
+    public Label taskDescription;
     int userID = 1;
     private Loginscreen loginscreen;
 
@@ -128,6 +132,7 @@ public class Startscreen {
         Button newSubmit = new Button("Todo hinzufügen");
         newSubmit.setMaxWidth(Double.MAX_VALUE);
         newSubmit.getStyleClass().add("form--submit");
+        newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newKategory.getText(), newPriority.getText()));
         todoPopupContainer.getChildren().add(newSubmit);
 
         Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
@@ -136,6 +141,15 @@ public class Startscreen {
         todoPopup.setScene(todoPopupScene);
         todoPopup.show();
     }
+
+    private void createToDo(int userID, String title, String description, LocalDate dueday, String category, String priority) {
+        Task task = new Task(userID, title, description, dueday, category, priority);
+
+        Database.setNewToDo(task.getUserID(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getCategory(), task.getPriority());
+
+        taskTitle.setText(task.getTitle());
+        taskDescription.setText(task.getDescription());
+        taskDueDay.setText(String.valueOf(task.getDueDay()));
+        taskPriority.setText(String.valueOf(task.getPriority()));
+    }
 }
-
-
