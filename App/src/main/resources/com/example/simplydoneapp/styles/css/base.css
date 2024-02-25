@@ -14,6 +14,10 @@
   -fx-font-size: 42;
 }
 
+.login--root {
+  -fx-background-color: #fff;
+}
+
 .error--label {
   -fx-text-fill: tomato;
   -fx-alignment: CENTER;
@@ -93,25 +97,17 @@
   -fx-background-radius: 50px;
   -fx-hgap: 20px;
   -fx-wgap: 20px;
-  -fx-padding: 40px;
+  -fx-padding: 30px 35px;
   -fx-border-radius: 8px;
   -fx-border-width: 1px;
   -fx-border-color: #F76C6A;
 }
 .form--lage--container .form--lage--textfield {
-  -fx-background-radius: 8px;
-  -fx-background-color: none;
-  -fx-border-radius: 8px;
-  -fx-border-color: #f2f2f2;
-  -fx-padding: 10px 16px 10px 16px;
+  -fx-border-color: #272727;
 }
 .form--lage--container .form--lage--submit {
-  -fx-background-radius: 8px;
-  -fx-border-radius: 8px;
   -fx-color: #F76C6A;
-  -fx-alignment: center;
   -fx-text-fill: #fff;
-  -fx-padding: 16px;
 }
 .form--lage--container .form--lage--link {
   -fx-background-radius: 8px;
