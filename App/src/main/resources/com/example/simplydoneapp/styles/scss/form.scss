@@ -1,0 +1,35 @@
+.form {
+  &--widget {
+    -fx-background-radius: 8px;
+    -fx-background-color: none;
+    -fx-border-radius: 8px;
+    -fx-border-color: $light-color;
+    -fx-border-width: 1px;
+    -fx-padding: 10px 16px 10px 16px;
+
+    &--special-input {
+      -fx-padding: 10px 16px 10px 7px;
+      .scroll-pane {
+        -fx-background-color: transparent;
+        .viewport {
+          -fx-background-color: transparent;
+          .content {
+            -fx-background-color: transparent;
+          }
+        }
+      }
+      .text-field {
+        -fx-background-color: transparent;
+      }
+    }
+  }
+
+  &--submit {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-color: $light-color;
+    -fx-alignment: center;
+    -fx-text-fill: $primary-light;
+    -fx-padding:16px;
+  }
+}

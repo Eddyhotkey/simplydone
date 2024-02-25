@@ -11,6 +11,7 @@
 }
 .root .h1Title {
   -fx-font-family: "Bebas Neue Regular";
+  -fx-font-size: 42;
 }
 
 .error--label {
@@ -36,6 +37,56 @@
 .button--image:hover {
   -fx-scale-y: 1.05;
   -fx-scale-x: 1.05;
+}
+
+.form--widget {
+  -fx-background-radius: 8px;
+  -fx-background-color: none;
+  -fx-border-radius: 8px;
+  -fx-border-color: #fff;
+  -fx-border-width: 1px;
+  -fx-padding: 10px 16px 10px 16px;
+}
+.form--widget--special-input {
+  -fx-padding: 10px 16px 10px 7px;
+}
+.form--widget--special-input .scroll-pane {
+  -fx-background-color: transparent;
+}
+.form--widget--special-input .scroll-pane .viewport {
+  -fx-background-color: transparent;
+}
+.form--widget--special-input .scroll-pane .viewport .content {
+  -fx-background-color: transparent;
+}
+.form--widget--special-input .text-field {
+  -fx-background-color: transparent;
+}
+.form--submit {
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+  -fx-color: #fff;
+  -fx-alignment: center;
+  -fx-text-fill: #F79E89;
+  -fx-padding: 16px;
+}
+
+.task--create--container {
+  -fx-padding: 15px 10px;
+  -fx-background-color: #F79E89;
+  -fx-max-width: 400px;
+  -fx-max-height: 650px;
+}
+.task--create--container .h1Title {
+  -fx-text-fill: #fff;
+}
+.task--create--container .form--widget {
+  -fx-text-fill: #fff;
+  -fx-prompt-text-fill: #fff;
+}
+.task--create--container .form--widget .text-field {
+  -fx-text-fill: #fff;
+  -fx-prompt-text-fill: #fff;
 }
 
 .form--lage--container {

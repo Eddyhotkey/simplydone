@@ -1,0 +1,20 @@
+.task--create--container {
+  -fx-padding: 15px 10px;
+  -fx-background-color: $primary-light;
+  -fx-max-width: 400px;
+  -fx-max-height: 650px;
+
+  .h1Title {
+    -fx-text-fill: $light-color;
+  }
+
+  .form--widget {
+    -fx-text-fill: $light-color;
+    -fx-prompt-text-fill: $light-color;
+
+    .text-field {
+      -fx-text-fill: $light-color;
+      -fx-prompt-text-fill: $light-color;
+    }
+  }
+}
