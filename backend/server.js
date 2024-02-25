@@ -8,11 +8,11 @@ app.get('/', (req, res) => {
 
 // Include route files
 const usersRoute = require('./controllers/users');
-//const productsRoute = require('./routes/products');
+const todoRoute = require('./controllers/todo');
 
 // Use routes
 app.use('/users', usersRoute);
-//app.use('products', productsRoute);
+app.use('/todo', todoRoute);
 
 const port = 1337;
 

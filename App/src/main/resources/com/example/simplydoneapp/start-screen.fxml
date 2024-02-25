@@ -89,7 +89,17 @@
                                     <Font size="42.0" />
                                  </font>
                               </Label>
-                              <VBox fx:id="vboxOtherTasks" prefHeight="500.0" prefWidth="100.0" />
+                              <VBox fx:id="vboxOtherTasks" prefHeight="500.0" prefWidth="100.0">
+                                 <children>
+                                    <AnchorPane prefHeight="100.0" prefWidth="383.0">
+                                       <children>
+                                          <Label fx:id="taskTitle" text="Label" />
+                                          <Label fx:id="taskPriority" layoutX="349.0" layoutY="78.0" text="Label" />
+                                          <Label fx:id="taskDueDay" layoutY="78.0" text="Label" />
+                                          <Label fx:id="taskDescription" layoutY="33.0" text="Label" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children></VBox>
                            </children>
                         </VBox>
                      </children>
