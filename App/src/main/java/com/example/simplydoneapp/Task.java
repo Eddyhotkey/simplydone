@@ -1,84 +1,96 @@
 package com.example.simplydoneapp;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Task {
-    public int todoID;
-    public int userID;
-    public String title;
-    public String description;
-    public LocalDate dueDay;
-    public String category;
-    public String priority;
-    public String status;
+    @Expose
+    public int ToDoID;
+    @Expose
+    public int UserID;
+    @Expose
+    public String Titel;
+    @Expose
+    public String Beschreibung;
+    @Expose
+    public String Fälligkeitsdatum;
+    @Expose
+    public String CategoryID;
+    @Expose
+    public String Priorität;
+    @Expose
+    public String Status;
 
-    public Task(int userID, String title, String description, LocalDate dueDay, String category, String priority) {
-        this.userID = userID;
-        this.title = title;
-        this.description = description;
-        this.dueDay = dueDay;
-        this.category = category;
-        this.priority = priority;
+
+    public Task(int userID, String title, String description, String dueDay, String category, String priority) {
+        this.UserID = userID;
+        this.Titel = title;
+        this.Beschreibung = description;
+        this.Fälligkeitsdatum = dueDay;
+        this.CategoryID = category;
+        this.Priorität = priority;
     }
 
     public String getStatus() {
-        return status;
+        return Status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.Status = status;
     }
 
     public int getTodoID() {
-        return todoID;
+        return ToDoID;
     }
 
     public void setTodoID(int todoID) {
-        this.todoID = todoID;
+        this.ToDoID = todoID;
     }
 
     public int getUserID() {
-        return userID;
+        return UserID;
     }
 
     public String getTitle() {
-        return title;
+        return Titel;
     }
 
     public String getDescription() {
-        return description;
+        return Beschreibung;
     }
 
-    public LocalDate getDueDay() {
-        return dueDay;
+    public String getDueDay() {
+        return Fälligkeitsdatum;
     }
 
     public String getCategory() {
-        return category;
+        return CategoryID;
     }
 
     public String getPriority() {
-        return priority;
+        return Priorität;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.Titel = title;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.Beschreibung = description;
     }
 
-    public void setDueDay(LocalDate dueDay) {
-        this.dueDay = dueDay;
+    public void String(String dueDay) {
+        this.Fälligkeitsdatum = dueDay;
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.CategoryID = category;
     }
 
     public void setPriority(String priority) {
-        this.priority = priority;
+        this.Priorität = priority;
     }
 }

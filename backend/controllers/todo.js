@@ -49,6 +49,22 @@ router.get('/get_all_open_todos', async (req, res) => {
     conn.close();
 });
 
+router.get('/get_all_open_todos_today', async (req, res) => {
+    const userid = req.query.userid;
+    const conn = await dbConnection();
+    let response = await get_all_open_todos_today(conn, userid);
+    res.send(response);
+    conn.close();
+});
+
+router.get('/get_all_open_other_todos', async (req, res) => {
+    const userid = req.query.userid;
+    const conn = await dbConnection();
+    let response = await get_all_open_other_todos(conn, userid);
+    res.send(response);
+    conn.close();
+});
+
 router.get('/all_open_todos', async (req, res) => {
     const userid = req.query.userid;
     const conn = await dbConnection();
@@ -75,7 +91,26 @@ async function add_todo_to_database(conn, userid, category, title, description, 
 
 async function get_all_open_todos(conn, userid) {
     try {
-        const data = await conn.query("SELECT UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ?", [userid, 'open']);
+        const data = await conn.query("SELECT ToDoID, UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ?", [userid, 'open']);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function get_all_open_todos_today(conn, userid) {
+    try {
+        const data = await conn.query("SELECT ToDoID, UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ? AND Fälligkeitsdatum = CURRENT_DATE", [userid, 'open']);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+async function get_all_open_other_todos(conn, userid) {
+    try {
+        const data = await conn.query("SELECT ToDoID, UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ? AND Fälligkeitsdatum <> CURRENT_DATE", [userid, 'open']);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);

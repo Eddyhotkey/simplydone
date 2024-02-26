@@ -60,6 +60,9 @@ public class Loginscreen {
                     if(Objects.equals(password, jsonObject.get("Passwort").getAsString())) {
                         callStartscreen();
                         startscreen.setUserId(jsonObject.get("UserID").getAsInt());
+                        startscreen.getUserData();
+                        startscreen.fillTodayTasks();
+                        startscreen.fillOtherTasks();
                     } else {
                         errorLabel.setText("Passwort ist nicht korrekt!");
                     }
@@ -114,7 +117,6 @@ public class Loginscreen {
 
             this.setStartscreen(startscreen);
             startscreen.setLoginscreen(this);
-            startscreen.fillTodayTasks();
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
