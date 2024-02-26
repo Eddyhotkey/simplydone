@@ -136,7 +136,7 @@ public class Startscreen {
         Button newSubmit = new Button("Todo hinzufügen");
         newSubmit.setMaxWidth(Double.MAX_VALUE);
         newSubmit.getStyleClass().add("form--submit");
-        newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newKategory.getText(), newPriority.getText()));
+        newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), String.valueOf(newDate.getValue()), newKategory.getText(), newPriority.getText()));
         todoPopupContainer.getChildren().add(newSubmit);
 
         Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
@@ -146,7 +146,7 @@ public class Startscreen {
         todoPopup.show();
     }
 
-    private void createToDo(int userID, String title, String description, LocalDate dueday, String category, String priority) {
+    private void createToDo(int userID, String title, String description, String dueday, String category, String priority) {
         Task task = new Task(userID, title, description, dueday, category, priority);
 
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
@@ -158,6 +158,6 @@ public class Startscreen {
     }
 
     public void fillTodayTasks() {
-        List<Task> data = Database.getAllOpenToDos(userID);
+        List<Task> data = Database.getAllOpenToDos(this.userID);
     }
 }
