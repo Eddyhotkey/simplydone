@@ -1,6 +1,7 @@
 package com.example.simplydoneapp;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.OkHttpClient;
@@ -45,11 +46,12 @@ public  class Database {
             if (response.isSuccessful()) {
                 String responseBody = response.body().string();
 
-                // Definieren Sie den Typ für die Deserialisierung
+                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 Type listType = new TypeToken<List<Task>>() {}.getType();
 
-                Gson gson = new Gson();
-                return gson.fromJson(responseBody, listType);
+                List<Task> taskList = gson.fromJson(responseBody, listType);
+
+                return taskList;
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -57,7 +59,7 @@ public  class Database {
         return null;
     }
 
-    public static int setNewToDo(int userid, String category, String title, String description, LocalDate dueday, String priority) {
+    public static int setNewToDo(int userid, String category, String title, String description, String dueday, String priority) {
         String apiUrl = apiBaseUrl + "todo/add_todo?"
                 + "userid="         + userid
                 + "&title="         + title
