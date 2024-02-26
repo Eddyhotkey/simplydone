@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import okhttp3.OkHttpClient;
@@ -18,6 +19,7 @@ import org.w3c.dom.Text;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Startscreen {
     public Label dummy;
@@ -31,10 +33,10 @@ public class Startscreen {
     public Label taskPriority;
     public Label taskDueDay;
     public Accordion taskDescription;
+    public VBox vboxDueToday;
+    public VBox vboxOtherTasks;
     int userID = 1;
     private Loginscreen loginscreen;
-
-    ListView<Task> tasksToday = new ListView<Task>();
 
     OkHttpClient client = new OkHttpClient();
 
@@ -44,11 +46,13 @@ public class Startscreen {
 
     public void setUserId(int userid) {
         this.userID = userid;
-        System.out.println("Empfangener Wert: " + userID);
-        getUserData();
     }
 
-    private void getUserData() {
+    public int getUserID() {
+        return this.userID;
+    }
+
+    protected void getUserData() {
 
         String apiUrl = "http:localhost:1337/users/get-user-data?userid=" + this.userID;
         Request request = new Request.Builder()
@@ -151,13 +155,43 @@ public class Startscreen {
 
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
 
-        taskTitle.setText(task.getTitle());
-        taskDescription.getPanes().getFirst().setText(task.getDescription());
-        taskDueDay.setText(String.valueOf(task.getDueDay()));
-        taskPriority.setText(String.valueOf(task.getPriority()));
+        Date date = new Date();
+        //ToDo if Statement testen
+        if(Objects.equals(task.getDueDay().substring(0, 10), date.toString().substring(0, 10))) {
+            vboxDueToday.getChildren().add(addToDo(task));
+        } else {
+            vboxOtherTasks.getChildren().add(addToDo(task));
+        }
+
+        //ToDo Fenster schlie0en nach Button click
     }
 
     public void fillTodayTasks() {
-        List<Task> data = Database.getAllOpenToDos(this.userID);
+        List<Task> data = Database.getAllOpenToDosToday(this.userID);
+
+        for (Task task : data) {
+            vboxDueToday.getChildren().add(addToDo(task));
+        }
+    }
+
+    public void fillOtherTasks() {
+        List<Task> data = Database.getAllOpenToDosOther(this.userID);
+
+        for (Task task : data) {
+            vboxOtherTasks.getChildren().add(addToDo(task));
+        }
+    }
+
+    public VBox addToDo(Task task) {
+        VBox container = new VBox();
+        Label labelFirstRow = new Label(task.getTodoID() + task.getTitle());
+        container.getChildren().add(labelFirstRow);
+        Label labelSecondRow = new Label(task.getDescription());
+        container.getChildren().add(labelSecondRow);
+        Label labelThirdRow = new Label("Fälligkeitsdatum:" + task.getDueDay().substring(0, 10));
+        container.getChildren().add(labelThirdRow);
+        Label labelForthRow = new Label("Priorität:" + task.getPriority());
+        container.getChildren().add(labelForthRow);
+        return container;
     }
 }

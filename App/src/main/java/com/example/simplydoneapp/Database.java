@@ -81,4 +81,18 @@ public  class Database {
 
         return apiCallMultipleObjects(apiUrl);
     }
+
+    public static List<Task> getAllOpenToDosToday(int userid) {
+        String apiUrl = apiBaseUrl + "todo/get_all_open_todos_today?"
+                + "userid=" + userid;
+
+        return apiCallMultipleObjects(apiUrl);
+    }
+
+    public static List<Task> getAllOpenToDosOther(int userid) {
+        String apiUrl = apiBaseUrl + "todo/get_all_open_other_todos?"
+                + "userid=" + userid;
+
+        return apiCallMultipleObjects(apiUrl);
+    }
 }
