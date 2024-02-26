@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Task {
     @Expose
-    public int todoID;
+    public int ToDoID;
     @Expose
     public int UserID;
     @Expose
@@ -43,11 +43,11 @@ public class Task {
     }
 
     public int getTodoID() {
-        return todoID;
+        return ToDoID;
     }
 
     public void setTodoID(int todoID) {
-        this.todoID = todoID;
+        this.ToDoID = todoID;
     }
 
     public int getUserID() {
