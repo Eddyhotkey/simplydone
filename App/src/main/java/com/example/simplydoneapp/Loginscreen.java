@@ -114,6 +114,7 @@ public class Loginscreen {
 
             this.setStartscreen(startscreen);
             startscreen.setLoginscreen(this);
+            startscreen.fillTodayTasks();
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());

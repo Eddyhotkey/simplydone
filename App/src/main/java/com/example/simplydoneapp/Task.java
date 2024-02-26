@@ -4,12 +4,14 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class Task {
-    int userID;
-    String title;
-    String description;
-    LocalDate dueDay;
-    String category;
-    String priority;
+    public int todoID;
+    public int userID;
+    public String title;
+    public String description;
+    public LocalDate dueDay;
+    public String category;
+    public String priority;
+    public String status;
 
     public Task(int userID, String title, String description, LocalDate dueDay, String category, String priority) {
         this.userID = userID;
@@ -18,6 +20,22 @@ public class Task {
         this.dueDay = dueDay;
         this.category = category;
         this.priority = priority;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getTodoID() {
+        return todoID;
+    }
+
+    public void setTodoID(int todoID) {
+        this.todoID = todoID;
     }
 
     public int getUserID() {

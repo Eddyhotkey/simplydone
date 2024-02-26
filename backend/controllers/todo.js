@@ -10,9 +10,9 @@ router.get('/', async (req, res) => {
 
     response += '/add_todo' + ' -- ' + 'Parameter: String title, String description, LocalDate dueday, String kategory, String priority' + ' -- ' + 'Response: leer';
     response += '<br>';
-    //response += '/check-credential' + ' -- ' + 'Parameter: Username' + ' -- ' + 'Response: Passwort';
-    //response += '<br>';
-    //response += '/all_usersl' + ' -- ' + 'Parameter: -' + ' -- ' + 'Response: Alle User';
+    response += '/get_all_open_todos' + ' -- ' + 'Parameter: UserId' + ' -- ' + 'Response: Alle offenen ToDos des Users als JSON Objekt';
+    response += '<br>';
+    response += '/all_open_todos' + ' -- ' + 'Parameter: UserId' + ' -- ' + 'Response: Alle offenen ToDos des Users leserlich';
 
     res.send(response);
 });
@@ -27,32 +27,37 @@ router.get('/add_todo', async (req, res) => {
     const conn = await dbConnection();
     let response = '';
 
-    if (!userid || !title || !description || !dueday || !category ||!priority) {
+    if (!userid || !title || !dueday || !category || !priority) {
         return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
     }
-
     try {
-        await add_todo_to_database(conn,userid, title, description, dueday, category, priority);
-        response += 'ToDo hinzugefügt';
+        let data =  await add_todo_to_database(conn, userid, category, title, description, dueday, priority);
+        let todoid = data.insertId;
+        response += `{"ToDoID":${todoid}}`;
     } catch (e) {
         console.log(e);
     }
-
-
     res.send(response);
     conn.close();
 });
 
-router.get('/all_todos', async (req, res) => {
+router.get('/get_all_open_todos', async (req, res) => {
     const userid = req.query.userid;
     const conn = await dbConnection();
-    var rows = await get_all_todos(conn, userid);
-    let response = '';
+    let response = await get_all_open_todos(conn, userid);
+    res.send(response);
+    conn.close();
+});
 
+router.get('/all_open_todos', async (req, res) => {
+    const userid = req.query.userid;
+    const conn = await dbConnection();
+    var rows = await get_all_open_todos(conn, userid);
+    let response = '';
     for (i = 0, len = rows.length; i < len; i++) {
-        response += '<br>' + (`${rows[i].UserID} - ${rows[i].Username} - ${rows[i].Passwort} - ${rows[i].Vorname} - ${rows[i].Nachname} - ${rows[i].Email}`);
+        response += '<br>' + (`${rows[i].ToDoID} - ${rows[i].UserID} - ${rows[i].CategoryID} - ${rows[i].Titel} - ${rows[i].Beschreibung} - ${rows[i].Fälligkeitsdatum} - ${rows[i].Priorität}`);
     }
-    response += '<br><br> Insgesamt ' + rows.length + ' User';
+    response += '<br><br> Insgesamt ' + rows.length + ' ToDos';
     res.send(response);
     conn.close();
 });
@@ -68,9 +73,9 @@ async function add_todo_to_database(conn, userid, category, title, description, 
     }
 }
 
-async function get_all_todos(conn, userid) {
+async function get_all_open_todos(conn, userid) {
     try {
-        const data = await conn.query("SELECT * FROM `ToDo-Eintrag` WHERE UserID = ?", [userid]);
+        const data = await conn.query("SELECT UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ?", [userid, 'open']);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);

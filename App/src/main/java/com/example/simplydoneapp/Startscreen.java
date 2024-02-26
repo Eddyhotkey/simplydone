@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,7 @@ import org.w3c.dom.Text;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 public class Startscreen {
     public Label dummy;
@@ -28,9 +30,11 @@ public class Startscreen {
     public Label taskTitle;
     public Label taskPriority;
     public Label taskDueDay;
-    public Label taskDescription;
+    public Accordion taskDescription;
     int userID = 1;
     private Loginscreen loginscreen;
+
+    ListView<Task> tasksToday = new ListView<Task>();
 
     OkHttpClient client = new OkHttpClient();
 
@@ -145,11 +149,15 @@ public class Startscreen {
     private void createToDo(int userID, String title, String description, LocalDate dueday, String category, String priority) {
         Task task = new Task(userID, title, description, dueday, category, priority);
 
-        Database.setNewToDo(task.getUserID(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getCategory(), task.getPriority());
+        task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
 
         taskTitle.setText(task.getTitle());
-        taskDescription.setText(task.getDescription());
+        taskDescription.getPanes().getFirst().setText(task.getDescription());
         taskDueDay.setText(String.valueOf(task.getDueDay()));
         taskPriority.setText(String.valueOf(task.getPriority()));
+    }
+
+    public void fillTodayTasks() {
+        List<Task> data = Database.getAllOpenToDos(userID);
     }
 }
