@@ -3,9 +3,11 @@ package com.example.simplydoneapp;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import okhttp3.OkHttpClient;
@@ -176,6 +178,8 @@ public class Startscreen {
                 vboxDueToday.getChildren().add(addToDo(task));
             }
         }
+        vboxDueToday.setSpacing(10);
+        vboxDueToday.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
     }
 
     public void fillOtherTasks() {
@@ -185,19 +189,59 @@ public class Startscreen {
                 vboxOtherTasks.getChildren().add(addToDo(task));
             }
         }
+        vboxOtherTasks.setSpacing(10);
+        vboxOtherTasks.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
     }
 
     public VBox addToDo(Task task) {
         task.setDateFaelligkeitsdatum(task.getDueDay());
-        VBox container = new VBox();
+        VBox container = new VBox(10);
+        container.getStyleClass().add("todo--container");
+        setBackgroundColor(container, task);
+
+        HBox firstRow = new HBox(10);
+
         Label labelFirstRow = new Label(task.getTodoID() + task.getTitle());
-        container.getChildren().add(labelFirstRow);
+        labelFirstRow.getStyleClass().add("todo--title");
+        Button editButton = new Button("edit");
+        editButton.getStyleClass().add("todo--edit");
+        Button doneButton = new Button("done");
+        doneButton.getStyleClass().add("todo--done");
+        firstRow.getChildren().add(labelFirstRow);
+        firstRow.getChildren().add(editButton);
+        firstRow.getChildren().add(doneButton);
+
+        container.getChildren().add(firstRow);
         Label labelSecondRow = new Label(task.getDescription());
+        labelSecondRow.getStyleClass().add("todo--description");
         container.getChildren().add(labelSecondRow);
-        Label labelThirdRow = new Label("Fälligkeitsdatum:" + task.getDateFaelligkeitsdatum());
-        container.getChildren().add(labelThirdRow);
+
+        HBox lastRow = new HBox();
+
+        Label labelThirdRow = new Label("Fällig am: " + task.getDateFaelligkeitsdatum());
+        labelThirdRow.getStyleClass().add("todo--dueday");
+        lastRow.getChildren().add(labelThirdRow);
+
         Label labelForthRow = new Label("Priorität:" + task.getPriority());
-        container.getChildren().add(labelForthRow);
+        labelForthRow.getStyleClass().add("todo--priority");
+        labelForthRow.setAlignment(Pos.CENTER_RIGHT);
+        lastRow.getChildren().add(labelForthRow);
+
+        //ToDo: Spacing variabel gestalten
+        lastRow.setSpacing(80);
+
+
+        container.getChildren().add(lastRow);
         return container;
+    }
+
+    public void setBackgroundColor(VBox container, Task task) {
+        if(Objects.equals(task.getPriority(), "hoch")) {
+            container.getStyleClass().add("todo--high");
+        } else if (Objects.equals(task.getPriority(), "mittel")) {
+            container.getStyleClass().add("todo--middle");
+        } else {
+            container.getStyleClass().add("todo--low");
+        }
     }
 }
