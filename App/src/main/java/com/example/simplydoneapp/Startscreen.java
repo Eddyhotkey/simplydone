@@ -5,18 +5,15 @@ import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.w3c.dom.Text;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -140,7 +137,7 @@ public class Startscreen {
         Button newSubmit = new Button("Todo hinzufügen");
         newSubmit.setMaxWidth(Double.MAX_VALUE);
         newSubmit.getStyleClass().add("form--submit");
-        newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), String.valueOf(newDate.getValue()), newKategory.getText(), newPriority.getText()));
+        newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newKategory.getText(), newPriority.getText()));
         todoPopupContainer.getChildren().add(newSubmit);
 
         Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
@@ -150,14 +147,20 @@ public class Startscreen {
         todoPopup.show();
     }
 
-    private void createToDo(int userID, String title, String description, String dueday, String category, String priority) {
-        Task task = new Task(userID, title, description, dueday, category, priority);
+    private void createToDo(int userID, String title, String description, LocalDate dueday, String category, String priority) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = dueday.format(formatter);
+        Task task = new Task(userID, title, description, formattedDate, category, priority);
 
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
+        task.setDateFaelligkeitsdatum(task.getDueDay());
 
-        Date date = new Date();
-        //ToDo if Statement testen
-        if(Objects.equals(task.getDueDay().substring(0, 10), date.toString().substring(0, 10))) {
+
+        LocalDate currentLocalDate = LocalDate.now();
+        String currentDate = currentLocalDate.format(formatter);
+        String selectedDate = task.getDateFaelligkeitsdatum().toString();
+
+        if(Objects.equals(selectedDate, currentDate)) {
             vboxDueToday.getChildren().add(addToDo(task));
         } else {
             vboxOtherTasks.getChildren().add(addToDo(task));
@@ -168,27 +171,30 @@ public class Startscreen {
 
     public void fillTodayTasks() {
         List<Task> data = Database.getAllOpenToDosToday(this.userID);
-
-        for (Task task : data) {
-            vboxDueToday.getChildren().add(addToDo(task));
+        if (data != null) {
+            for (Task task : data) {
+                vboxDueToday.getChildren().add(addToDo(task));
+            }
         }
     }
 
     public void fillOtherTasks() {
         List<Task> data = Database.getAllOpenToDosOther(this.userID);
-
-        for (Task task : data) {
-            vboxOtherTasks.getChildren().add(addToDo(task));
+        if (data != null) {
+            for (Task task : data) {
+                vboxOtherTasks.getChildren().add(addToDo(task));
+            }
         }
     }
 
     public VBox addToDo(Task task) {
+        task.setDateFaelligkeitsdatum(task.getDueDay());
         VBox container = new VBox();
         Label labelFirstRow = new Label(task.getTodoID() + task.getTitle());
         container.getChildren().add(labelFirstRow);
         Label labelSecondRow = new Label(task.getDescription());
         container.getChildren().add(labelSecondRow);
-        Label labelThirdRow = new Label("Fälligkeitsdatum:" + task.getDueDay().substring(0, 10));
+        Label labelThirdRow = new Label("Fälligkeitsdatum:" + task.getDateFaelligkeitsdatum());
         container.getChildren().add(labelThirdRow);
         Label labelForthRow = new Label("Priorität:" + task.getPriority());
         container.getChildren().add(labelForthRow);

@@ -2,9 +2,10 @@ package com.example.simplydoneapp;
 
 import com.google.gson.annotations.Expose;
 
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     @Expose
@@ -17,6 +18,7 @@ public class Task {
     public String Beschreibung;
     @Expose
     public String Fälligkeitsdatum;
+    public String DateFaelligkeitsdatum;
     @Expose
     public String CategoryID;
     @Expose
@@ -92,5 +94,22 @@ public class Task {
 
     public void setPriority(String priority) {
         this.Priorität = priority;
+    }
+
+    public String getDateFaelligkeitsdatum() {
+        return DateFaelligkeitsdatum;
+    }
+
+    public void setDateFaelligkeitsdatum(String Fälligkeitsdatum) {
+        if(Fälligkeitsdatum == null) { return; }
+        if(Fälligkeitsdatum.length() > 10) {
+            Instant instant = Instant.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(Fälligkeitsdatum));
+            LocalDate date = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDate = date.format(outputFormatter);
+            DateFaelligkeitsdatum = formattedDate;
+        } else {
+            DateFaelligkeitsdatum = Fälligkeitsdatum;
+        }
     }
 }
