@@ -1,0 +1,62 @@
+.scroll--container {
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+  &:focused {
+    -fx-background-insets: 0;
+  }
+  .corner {
+    -fx-background-insets: 0;
+  }
+}
+
+.list-cell {
+  -fx-padding: 12px ;
+  -fx-background-color: transparent, -fx-background ;
+  -fx-background-insets: 0px, 2px ;
+}
+
+.todo {
+  &--container {
+    -fx-background-color: $grey-color;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+    -fx-padding: 13px 20px 13px 20px;
+  }
+  &--title {
+    -fx-font-weight: 700;
+    -fx-text-fill: $light-color;
+  }
+  &--description, &--dueday, &--priority {
+    -fx-text-fill: $light-color;
+  }
+
+  &--high {
+    -fx-background-color: $primary-color;
+  }
+  &--middle {
+    -fx-background-color: $primary-light;
+  }
+  &--low {
+    -fx-background-color: $todo-low;
+  }
+
+  &--edit {
+    -fx-background-color: none;
+    -fx-border-color: none;
+    -fx-text-fill: $light-color;
+    -fx-underline: true;
+    &:hover {
+      -fx-text-fill: $dark-color;
+    }
+  }
+  &--done {
+    -fx-background-color: none;
+    -fx-border-color: none;
+    -fx-text-fill: $light-color;
+    -fx-underline: true;
+    &:hover {
+      -fx-text-fill: $dark-color;
+    }
+  }
+}
+

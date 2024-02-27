@@ -93,6 +93,64 @@
   -fx-prompt-text-fill: #fff;
 }
 
+.scroll--container {
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+.scroll--container:focused {
+  -fx-background-insets: 0;
+}
+.scroll--container .corner {
+  -fx-background-insets: 0;
+}
+
+.list-cell {
+  -fx-padding: 12px;
+  -fx-background-color: transparent, -fx-background;
+  -fx-background-insets: 0px, 2px;
+}
+
+.todo--container {
+  -fx-background-color: #f2f2f2;
+  -fx-background-radius: 25px;
+  -fx-border-radius: 25px;
+  -fx-padding: 13px 20px 13px 20px;
+}
+.todo--title {
+  -fx-font-weight: 700;
+  -fx-text-fill: #fff;
+}
+.todo--description, .todo--dueday, .todo--priority {
+  -fx-text-fill: #fff;
+}
+.todo--high {
+  -fx-background-color: #F76C6A;
+}
+.todo--middle {
+  -fx-background-color: #F79E89;
+}
+.todo--low {
+  -fx-background-color: #f2f2f2;
+}
+.todo--edit {
+  -fx-background-color: none;
+  -fx-border-color: none;
+  -fx-text-fill: #fff;
+  -fx-underline: true;
+}
+.todo--edit:hover {
+  -fx-text-fill: #272727;
+}
+.todo--done {
+  -fx-background-color: none;
+  -fx-border-color: none;
+  -fx-text-fill: #fff;
+  -fx-underline: true;
+}
+.todo--done:hover {
+  -fx-text-fill: #272727;
+}
+
 .form--lage--container {
   -fx-background-radius: 50px;
   -fx-hgap: 20px;
