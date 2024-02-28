@@ -34,6 +34,7 @@ public class Startscreen {
     public Accordion taskDescription;
     public VBox vboxDueToday;
     public VBox vboxOtherTasks;
+    public Button btnExit;
     int userID = 1;
     private Loginscreen loginscreen;
 
@@ -122,7 +123,7 @@ public class Startscreen {
         DatePicker newDate = new DatePicker();
         newDate.getStyleClass().add("form--widget");
         newDate.getStyleClass().add("form--widget--special-input");
-        newDate.setPromptText(new Date().toString());
+        newDate.setPromptText(getCurrentDate());
         newDate.setMaxWidth(Double.MAX_VALUE);
         todoPopupContainer.getChildren().add(newDate);
 
@@ -131,15 +132,19 @@ public class Startscreen {
         newKategory.setPromptText("Kategorie");
         todoPopupContainer.getChildren().add(newKategory);
 
-        TextField newPriority = new TextField();
+        ComboBox newPriority = new ComboBox();
         newPriority.getStyleClass().add("form--widget");
+        newPriority.getStyleClass().add("form--widget--select");
         newPriority.setPromptText("Priorität");
+        newPriority.getItems().addAll("niedrig", "mittel", "hoch");
+        newPriority.setValue("mittel");
+        newPriority.setMaxWidth(Double.MAX_VALUE);
         todoPopupContainer.getChildren().add(newPriority);
 
         Button newSubmit = new Button("Todo hinzufügen");
         newSubmit.setMaxWidth(Double.MAX_VALUE);
         newSubmit.getStyleClass().add("form--submit");
-        newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newKategory.getText(), newPriority.getText()));
+        newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newKategory.getText(), String.valueOf(newPriority.getValue())));
         todoPopupContainer.getChildren().add(newSubmit);
 
         Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
@@ -195,9 +200,11 @@ public class Startscreen {
 
     public VBox addToDo(Task task) {
         task.setDateFaelligkeitsdatum(task.getDueDay());
+
         VBox container = new VBox(10);
         container.getStyleClass().add("todo--container");
         setBackgroundColor(container, task);
+        container.setOnMouseClicked((event -> editTodo(task)));
 
         HBox firstRow = new HBox(10);
 
@@ -230,7 +237,6 @@ public class Startscreen {
         //ToDo: Spacing variabel gestalten
         lastRow.setSpacing(80);
 
-
         container.getChildren().add(lastRow);
         return container;
     }
@@ -243,5 +249,85 @@ public class Startscreen {
         } else {
             container.getStyleClass().add("todo--low");
         }
+    }
+
+    public void editTodo(Task task) {
+        Stage todoPopup = new Stage();
+        Stage currentStage = (Stage) btnExit.getScene().getWindow();
+        todoPopup.initOwner(currentStage);
+
+        VBox todoPopupContainer = new VBox(15);
+        todoPopupContainer.getStyleClass().add("task--create--container");
+
+        Label newLabel = new Label("ToDo bearbeiten");
+        newLabel.getStyleClass().add("h1Title");
+        todoPopupContainer.getChildren().add(newLabel);
+
+        TextField newTitle = new TextField();
+        newTitle.getStyleClass().add("form--widget");
+        newTitle.setPromptText("Titel");
+        newTitle.setText(task.getTitle());
+        todoPopupContainer.getChildren().add(newTitle);
+
+        TextArea newDescripton = new TextArea();
+        newDescripton.getStyleClass().add("form--widget");
+        newDescripton.getStyleClass().add("form--widget--special-input");
+        newDescripton.setPromptText("Beschreibung");
+        newDescripton.setText(task.getDescription());
+        todoPopupContainer.getChildren().add(newDescripton);
+
+        DatePicker newDate = new DatePicker();
+        newDate.getStyleClass().add("form--widget");
+        newDate.getStyleClass().add("form--widget--special-input");
+        newDate.setPromptText(getCurrentDate());
+        newDate.setMaxWidth(Double.MAX_VALUE);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        newDate.setValue(LocalDate.parse(task.getDateFaelligkeitsdatum(), formatter));
+        todoPopupContainer.getChildren().add(newDate);
+
+        TextField newCategory = new TextField();
+        newCategory.getStyleClass().add("form--widget");
+        newCategory.setPromptText("Kategorie");
+        newCategory.setText(task.getCategory());
+        todoPopupContainer.getChildren().add(newCategory);
+
+        ComboBox newPriority = new ComboBox();
+        newPriority.getStyleClass().add("form--widget");
+        newPriority.getStyleClass().add("form--widget--select");
+        newPriority.setPromptText("Priorität");
+        newPriority.getItems().addAll("niedrig", "mittel", "hoch");
+        newPriority.setValue(task.getPriority());
+        newPriority.setMaxWidth(Double.MAX_VALUE);
+        todoPopupContainer.getChildren().add(newPriority);
+
+        Button editChange = new Button("Änderungen speichern");
+        editChange.setMaxWidth(Double.MAX_VALUE);
+        editChange.getStyleClass().add("form--submit");
+        //newChange.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
+        todoPopupContainer.getChildren().add(editChange);
+
+        Button editDone = new Button("ToDo erledigt");
+        editDone.setMaxWidth(Double.MAX_VALUE);
+        editDone.getStyleClass().add("form--submit");
+        //newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
+        todoPopupContainer.getChildren().add(editDone);
+
+        Button editDelete = new Button("ToDo löschen");
+        editDelete.setMaxWidth(Double.MAX_VALUE);
+        editDelete.getStyleClass().add("form--submit form--submit--red");
+        //newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
+        todoPopupContainer.getChildren().add(editDelete);
+
+        Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
+        todoPopupScene.getStylesheets().clear();
+        todoPopupScene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
+        todoPopup.setScene(todoPopupScene);
+        todoPopup.show();
+    }
+
+    public String getCurrentDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate currentLocalDate = LocalDate.now();
+        return currentLocalDate.format(formatter);
     }
 }
