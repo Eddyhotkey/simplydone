@@ -84,7 +84,7 @@ public class Task {
         this.Beschreibung = description;
     }
 
-    public void String(String dueDay) {
+    public void setFälligkeitsdatum(String dueDay) {
         this.Fälligkeitsdatum = dueDay;
     }
 
