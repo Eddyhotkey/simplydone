@@ -105,20 +105,18 @@ router.get('/close_todo', async (req, res) => {
     const conn = await dbConnection();
     let response = '';
 
-    if (!userid || !title || !dueday || !category || !priority) {
+    if (!todoid) {
         return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
     }
     try {
         let data =  await close_todo_in_database(conn, todoid);
-        let todoid = data.insertId;
-        response += `{"ToDoID":${todoid}}`;
+        response = `{"affectedRows":${data.affectedRows}}`;
     } catch (e) {
         console.log(e);
     }
     res.send(response);
     conn.close();
 });
-
 
 async function add_todo_to_database(conn, userid, category, title, description, dueday, priority) {
     try {

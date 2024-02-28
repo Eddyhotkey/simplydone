@@ -165,12 +165,9 @@ public class Startscreen {
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
         task.setDateFaelligkeitsdatum(task.getDueDay());
 
-
-        LocalDate currentLocalDate = LocalDate.now();
-        String currentDate = currentLocalDate.format(formatter);
         String selectedDate = task.getDateFaelligkeitsdatum().toString();
 
-        if(Objects.equals(selectedDate, currentDate)) {
+        if(Objects.equals(selectedDate, getCurrentDate())) {
             vboxDueToday.getChildren().add(addToDo(task));
         } else {
             vboxOtherTasks.getChildren().add(addToDo(task));
@@ -212,6 +209,7 @@ public class Startscreen {
         Label labelFirstRow = new Label(task.getTodoID() + task.getTitle());
         labelFirstRow.getStyleClass().add("todo--title");
         Button doneButton = new Button("done");
+        doneButton.setOnAction(event -> actCloseToDo(task));
         doneButton.getStyleClass().add("todo--done");
         firstRow.getChildren().add(labelFirstRow);
         firstRow.getChildren().add(doneButton);
@@ -310,7 +308,10 @@ public class Startscreen {
         Button editDone = new Button("ToDo erledigt");
         editDone.setMaxWidth(Double.MAX_VALUE);
         editDone.getStyleClass().add("form--submit");
-        //editDone.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
+        editDone.setOnAction(event -> {
+            actCloseToDo(task);
+            closeStage(todoPopup);
+        });
         todoPopupContainer.getChildren().add(editDone);
 
         Button editDelete = new Button("ToDo löschen");
@@ -343,14 +344,29 @@ public class Startscreen {
         if (dbResponse < 0) {
             return;
         }
-        LocalDate currentLocalDate = LocalDate.now();
-        String currentDate = currentLocalDate.format(formatter);
+
         String selectedDate = task.getDateFaelligkeitsdatum().toString();
 
-        if(Objects.equals(selectedDate, currentDate)) {
+        if(Objects.equals(selectedDate, getCurrentDate())) {
             vboxDueToday.getChildren().add(addToDo(task));
         } else {
             vboxOtherTasks.getChildren().add(addToDo(task));
+        }
+    }
+
+    public void actCloseToDo(Task task) {
+        int dbResponse = Database.closeTodo(task.getTodoID());
+        //ToDO: besseres Handling
+        if (dbResponse < 0) {
+            return;
+        }
+        String selectedDate = task.getDateFaelligkeitsdatum().toString();
+
+        //ToDo: Weg finden die VBox zu löschen
+        if(Objects.equals(selectedDate, getCurrentDate())) {
+           //vboxDueToday.getChildren().remove(addToDo(task));
+        } else {
+            //vboxOtherTasks.getChildren().remove(addToDo(task));
         }
     }
 

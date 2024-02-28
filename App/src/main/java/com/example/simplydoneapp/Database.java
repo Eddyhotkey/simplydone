@@ -114,4 +114,15 @@ public  class Database {
         }
         return -1;
     }
+    public static int closeTodo(int todoid) {
+        String apiUrl = apiBaseUrl + "todo/close_todo?"
+                + "todoid=" + todoid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("affectedRows").getAsInt();
+        }
+        return -1;
+    }
 }
