@@ -95,4 +95,34 @@ public  class Database {
 
         return apiCallMultipleObjects(apiUrl);
     }
+    public static int updateCurrentTodo(String category, String title, String description, LocalDate dueday, String priority, int todoid) {
+        //ToDo GetCategory Methode für CategoryID
+        int categoryid = 1;
+
+        String apiUrl = apiBaseUrl + "todo/update_todo?"
+                + "category=" + categoryid
+                + "&title=" + title
+                + "&description=" + description
+                + "&dueday=" + dueday
+                + "&priority=" + priority
+                + "&todoid=" + todoid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("affectedRows").getAsInt();
+        }
+        return -1;
+    }
+    public static int closeTodo(int todoid) {
+        String apiUrl = apiBaseUrl + "todo/close_todo?"
+                + "todoid=" + todoid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("affectedRows").getAsInt();
+        }
+        return -1;
+    }
 }

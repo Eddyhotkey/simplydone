@@ -127,10 +127,10 @@ public class Startscreen {
         newDate.setMaxWidth(Double.MAX_VALUE);
         todoPopupContainer.getChildren().add(newDate);
 
-        TextField newKategory = new TextField();
-        newKategory.getStyleClass().add("form--widget");
-        newKategory.setPromptText("Kategorie");
-        todoPopupContainer.getChildren().add(newKategory);
+        TextField newCategory = new TextField();
+        newCategory.getStyleClass().add("form--widget");
+        newCategory.setPromptText("Kategorie");
+        todoPopupContainer.getChildren().add(newCategory);
 
         ComboBox newPriority = new ComboBox();
         newPriority.getStyleClass().add("form--widget");
@@ -144,7 +144,10 @@ public class Startscreen {
         Button newSubmit = new Button("Todo hinzufügen");
         newSubmit.setMaxWidth(Double.MAX_VALUE);
         newSubmit.getStyleClass().add("form--submit");
-        newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newKategory.getText(), String.valueOf(newPriority.getValue())));
+        newSubmit.setOnAction(event -> {
+            createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue()));
+            closeStage(todoPopup);
+        });
         todoPopupContainer.getChildren().add(newSubmit);
 
         Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
@@ -162,18 +165,13 @@ public class Startscreen {
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
         task.setDateFaelligkeitsdatum(task.getDueDay());
 
-
-        LocalDate currentLocalDate = LocalDate.now();
-        String currentDate = currentLocalDate.format(formatter);
         String selectedDate = task.getDateFaelligkeitsdatum().toString();
 
-        if(Objects.equals(selectedDate, currentDate)) {
+        if(Objects.equals(selectedDate, getCurrentDate())) {
             vboxDueToday.getChildren().add(addToDo(task));
         } else {
             vboxOtherTasks.getChildren().add(addToDo(task));
         }
-
-        //ToDo Fenster schlie0en nach Button click
     }
 
     public void fillTodayTasks() {
@@ -210,12 +208,10 @@ public class Startscreen {
 
         Label labelFirstRow = new Label(task.getTodoID() + task.getTitle());
         labelFirstRow.getStyleClass().add("todo--title");
-        Button editButton = new Button("edit");
-        editButton.getStyleClass().add("todo--edit");
         Button doneButton = new Button("done");
+        doneButton.setOnAction(event -> actCloseToDo(task));
         doneButton.getStyleClass().add("todo--done");
         firstRow.getChildren().add(labelFirstRow);
-        firstRow.getChildren().add(editButton);
         firstRow.getChildren().add(doneButton);
 
         container.getChildren().add(firstRow);
@@ -303,19 +299,25 @@ public class Startscreen {
         Button editChange = new Button("Änderungen speichern");
         editChange.setMaxWidth(Double.MAX_VALUE);
         editChange.getStyleClass().add("form--submit");
-        //newChange.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
+        editChange.setOnAction(event -> {
+            actUpdateTodo(task, newCategory.getText(), newTitle.getText(), newDescripton.getText(), newDate.getValue(), String.valueOf(newPriority.getValue()));
+            closeStage(todoPopup);
+        });
         todoPopupContainer.getChildren().add(editChange);
 
         Button editDone = new Button("ToDo erledigt");
         editDone.setMaxWidth(Double.MAX_VALUE);
         editDone.getStyleClass().add("form--submit");
-        //newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
+        editDone.setOnAction(event -> {
+            actCloseToDo(task);
+            closeStage(todoPopup);
+        });
         todoPopupContainer.getChildren().add(editDone);
 
         Button editDelete = new Button("ToDo löschen");
         editDelete.setMaxWidth(Double.MAX_VALUE);
         editDelete.getStyleClass().add("form--submit form--submit--red");
-        //newSubmit.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
+        //editDelete.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
         todoPopupContainer.getChildren().add(editDelete);
 
         Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
@@ -325,9 +327,56 @@ public class Startscreen {
         todoPopup.show();
     }
 
+    public void actUpdateTodo(Task task, String category, String title, String description, LocalDate dueday, String priority) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = dueday.format(formatter);
+
+        task.setTitle(title);
+        task.setDescription(description);
+        task.setCategory(category);
+        task.setDateFaelligkeitsdatum(formattedDate);
+        task.setFälligkeitsdatum(formattedDate);
+        task.setPriority(priority);
+
+        int dbResponse = Database.updateCurrentTodo(task.getCategory(), task.getTitle(), task.getDescription(), dueday, task.getPriority(), task.getTodoID());
+
+        //ToDO: besseres Handling
+        if (dbResponse < 0) {
+            return;
+        }
+
+        String selectedDate = task.getDateFaelligkeitsdatum().toString();
+
+        if(Objects.equals(selectedDate, getCurrentDate())) {
+            vboxDueToday.getChildren().add(addToDo(task));
+        } else {
+            vboxOtherTasks.getChildren().add(addToDo(task));
+        }
+    }
+
+    public void actCloseToDo(Task task) {
+        int dbResponse = Database.closeTodo(task.getTodoID());
+        //ToDO: besseres Handling
+        if (dbResponse < 0) {
+            return;
+        }
+        String selectedDate = task.getDateFaelligkeitsdatum().toString();
+
+        //ToDo: Weg finden die VBox zu löschen
+        if(Objects.equals(selectedDate, getCurrentDate())) {
+           //vboxDueToday.getChildren().remove(addToDo(task));
+        } else {
+            //vboxOtherTasks.getChildren().remove(addToDo(task));
+        }
+    }
+
     public String getCurrentDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate currentLocalDate = LocalDate.now();
         return currentLocalDate.format(formatter);
+    }
+
+    public void closeStage(Stage currentStage) {
+        currentStage.close();
     }
 }
