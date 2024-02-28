@@ -78,10 +78,71 @@ router.get('/all_open_todos', async (req, res) => {
     conn.close();
 });
 
+router.get('/update_todo', async (req, res) => {
+    const category = req.query.category;
+    const title = req.query.title;
+    const description = req.query.description;
+    const dueday = req.query.dueday;
+    const priority = req.query.priority;
+    const todoid = req.query.todoid;
+    const conn = await dbConnection();
+    let response = '';
+
+    if (!todoid || !title || !dueday || !category || !priority) {
+        return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
+    }
+    try {
+       let data = await update_todo_in_database(conn, category, title, description, dueday, priority, todoid);
+       response = `{"affectedRows":${data.affectedRows}}`;
+    } catch (e) {
+        console.log(e);
+    }
+    res.send(response);
+    conn.close();
+});
+router.get('/close_todo', async (req, res) => {
+    const todoid = req.query.todoid;
+    const conn = await dbConnection();
+    let response = '';
+
+    if (!userid || !title || !dueday || !category || !priority) {
+        return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
+    }
+    try {
+        let data =  await close_todo_in_database(conn, todoid);
+        let todoid = data.insertId;
+        response += `{"ToDoID":${todoid}}`;
+    } catch (e) {
+        console.log(e);
+    }
+    res.send(response);
+    conn.close();
+});
+
 
 async function add_todo_to_database(conn, userid, category, title, description, dueday, priority) {
     try {
         const data = await conn.query("INSERT INTO `ToDo-Eintrag` (UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status) VALUES(?,?,?,?,?,?,?)", [userid, '1', title, description, dueday, priority, "open"]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function update_todo_in_database(conn, category, title, description, dueday, priority, todoid) {
+    try {
+        const data = await conn.query("UPDATE `ToDo-Eintrag` SET CategoryID = ?, Titel = ?, Beschreibung = ?, Fälligkeitsdatum = ?, Priorität = ? WHERE ToDoID = ?", ['1', title, description, dueday, priority, todoid]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function close_todo_in_database(conn, todoid) {
+    try {
+        const data = await conn.query("UPDATE `ToDo-Eintrag` SET Status = 'close' WHERE ToDoID = ?", [todoid]);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);
