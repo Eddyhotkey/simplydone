@@ -35,6 +35,9 @@ public class Startscreen {
     public VBox vboxDueToday;
     public VBox vboxOtherTasks;
     public Button btnExit;
+    public Button btnCategoryScene;
+    public Button btnToDoScene;
+    public Button btnProfileScene;
     int userID = 1;
     private Loginscreen loginscreen;
 
@@ -162,7 +165,7 @@ public class Startscreen {
         String formattedDate = dueday.format(formatter);
         Task task = new Task(userID, title, description, formattedDate, category, priority);
 
-        task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
+        task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), dueday, task.getPriority()));
         task.setDateFaelligkeitsdatum(task.getDueDay());
 
         updateVboxes(vboxDueToday, vboxOtherTasks, addToDo(task), task);
@@ -392,5 +395,16 @@ public class Startscreen {
                 other.getChildren().add(addToDo(task));
             }
         }
+    }
+
+    public void actCategoryScene(ActionEvent actionEvent) {
+        Category categoryScene = new Category();
+        categoryScene.openCategory((Stage) btnCategoryScene.getScene().getWindow());
+    }
+
+    public void actToDoScene(ActionEvent actionEvent) {
+    }
+
+    public void actProfileScene(ActionEvent actionEvent) {
     }
 }
