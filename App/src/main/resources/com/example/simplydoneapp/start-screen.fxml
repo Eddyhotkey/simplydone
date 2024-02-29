@@ -11,7 +11,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -60,9 +63,9 @@
             </HBox>
             <ButtonBar layoutX="6.0" layoutY="744.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="300.0">
               <buttons>
-                  <Button mnemonicParsing="false" text="Kategorie" />
-                  <Button mnemonicParsing="false" text="ToDos" />
-                <Button mnemonicParsing="false" text="Profil" />
+                  <Button fx:id="btnCategoryScene" mnemonicParsing="false" onAction="#actCategoryScene" text="Kategorie" />
+                  <Button fx:id="btnToDoScene" mnemonicParsing="false" onAction="#actToDoScene" text="ToDos" />
+                <Button fx:id="btnProfileScene" mnemonicParsing="false" onAction="#actProfileScene" text="Profil" />
               </buttons>
             </ButtonBar>
          </children>
@@ -76,7 +79,20 @@
                <children>
                   <HBox layoutY="-2.0" prefHeight="658.0" prefWidth="814.0" styleClass="dashboard--background">
                      <children>
-                        <VBox prefHeight="550.0" prefWidth="750.0" />
+                        <VBox prefHeight="550.0" prefWidth="750.0">
+                           <children>
+                              <GridPane fx:id="gridCalender">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </children></VBox>
                         <VBox prefHeight="550.0" prefWidth="750.0">
                            <children>
                               <Label prefHeight="62.0" prefWidth="384.0" styleClass="h1Title" text="Fällig heute">

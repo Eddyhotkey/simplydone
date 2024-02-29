@@ -35,6 +35,9 @@ public class Startscreen {
     public VBox vboxDueToday;
     public VBox vboxOtherTasks;
     public Button btnExit;
+    public Button btnCategoryScene;
+    public Button btnToDoScene;
+    public Button btnProfileScene;
     int userID = 1;
     private Loginscreen loginscreen;
 
@@ -392,5 +395,16 @@ public class Startscreen {
                 other.getChildren().add(addToDo(task));
             }
         }
+    }
+
+    public void actCategoryScene(ActionEvent actionEvent) {
+        Category categoryScene = new Category();
+        categoryScene.openCategory((Stage) btnCategoryScene.getScene().getWindow());
+    }
+
+    public void actToDoScene(ActionEvent actionEvent) {
+    }
+
+    public void actProfileScene(ActionEvent actionEvent) {
     }
 }
