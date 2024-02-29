@@ -59,7 +59,7 @@ public  class Database {
         return null;
     }
 
-    public static int setNewToDo(int userid, String category, String title, String description, String dueday, String priority) {
+    public static int setNewToDo(int userid, String category, String title, String description, LocalDate dueday, String priority) {
         String apiUrl = apiBaseUrl + "todo/add_todo?"
                 + "userid="         + userid
                 + "&title="         + title

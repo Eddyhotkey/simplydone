@@ -162,7 +162,7 @@ public class Startscreen {
         String formattedDate = dueday.format(formatter);
         Task task = new Task(userID, title, description, formattedDate, category, priority);
 
-        task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
+        task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), dueday, task.getPriority()));
         task.setDateFaelligkeitsdatum(task.getDueDay());
 
         updateVboxes(vboxDueToday, vboxOtherTasks, addToDo(task), task);
