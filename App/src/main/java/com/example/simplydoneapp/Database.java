@@ -125,4 +125,16 @@ public  class Database {
         }
         return -1;
     }
+
+    public static int deleteTodo(int todoid) {
+        String apiUrl = apiBaseUrl + "todo/delete_todo?"
+                + "todoid=" + todoid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("affectedRows").getAsInt();
+        }
+        return -1;
+    }
 }

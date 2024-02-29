@@ -34,6 +34,7 @@ public class Task {
         this.Fälligkeitsdatum = dueDay;
         this.CategoryID = category;
         this.Priorität = priority;
+        this.Status = "open";
     }
 
     public String getStatus() {

@@ -165,13 +165,7 @@ public class Startscreen {
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), task.getDueDay(), task.getPriority()));
         task.setDateFaelligkeitsdatum(task.getDueDay());
 
-        String selectedDate = task.getDateFaelligkeitsdatum().toString();
-
-        if(Objects.equals(selectedDate, getCurrentDate())) {
-            vboxDueToday.getChildren().add(addToDo(task));
-        } else {
-            vboxOtherTasks.getChildren().add(addToDo(task));
-        }
+        updateVboxes(vboxDueToday, vboxOtherTasks, addToDo(task), task);
     }
 
     public void fillTodayTasks() {
@@ -202,14 +196,14 @@ public class Startscreen {
         VBox container = new VBox(10);
         container.getStyleClass().add("todo--container");
         setBackgroundColor(container, task);
-        container.setOnMouseClicked((event -> editTodo(task)));
+        container.setOnMouseClicked((event -> editTodo(task, container)));
 
         HBox firstRow = new HBox(10);
 
         Label labelFirstRow = new Label(task.getTodoID() + task.getTitle());
         labelFirstRow.getStyleClass().add("todo--title");
         Button doneButton = new Button("done");
-        doneButton.setOnAction(event -> actCloseToDo(task));
+        doneButton.setOnAction(event -> actCloseToDo(task, container));
         doneButton.getStyleClass().add("todo--done");
         firstRow.getChildren().add(labelFirstRow);
         firstRow.getChildren().add(doneButton);
@@ -247,7 +241,7 @@ public class Startscreen {
         }
     }
 
-    public void editTodo(Task task) {
+    public void editTodo(Task task, VBox container) {
         Stage todoPopup = new Stage();
         Stage currentStage = (Stage) btnExit.getScene().getWindow();
         todoPopup.initOwner(currentStage);
@@ -300,7 +294,7 @@ public class Startscreen {
         editChange.setMaxWidth(Double.MAX_VALUE);
         editChange.getStyleClass().add("form--submit");
         editChange.setOnAction(event -> {
-            actUpdateTodo(task, newCategory.getText(), newTitle.getText(), newDescripton.getText(), newDate.getValue(), String.valueOf(newPriority.getValue()));
+            actUpdateTodo(task, newCategory.getText(), newTitle.getText(), newDescripton.getText(), newDate.getValue(), String.valueOf(newPriority.getValue()), container);
             closeStage(todoPopup);
         });
         todoPopupContainer.getChildren().add(editChange);
@@ -309,7 +303,7 @@ public class Startscreen {
         editDone.setMaxWidth(Double.MAX_VALUE);
         editDone.getStyleClass().add("form--submit");
         editDone.setOnAction(event -> {
-            actCloseToDo(task);
+            actCloseToDo(task, container);
             closeStage(todoPopup);
         });
         todoPopupContainer.getChildren().add(editDone);
@@ -317,7 +311,10 @@ public class Startscreen {
         Button editDelete = new Button("ToDo löschen");
         editDelete.setMaxWidth(Double.MAX_VALUE);
         editDelete.getStyleClass().add("form--submit form--submit--red");
-        //editDelete.setOnAction(event -> createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue())));
+        editDelete.setOnAction(event -> {
+            actDeleteToDo(task, container);
+            closeStage(todoPopup);
+        });
         todoPopupContainer.getChildren().add(editDelete);
 
         Scene todoPopupScene = new Scene(todoPopupContainer, 300, 450);
@@ -327,7 +324,7 @@ public class Startscreen {
         todoPopup.show();
     }
 
-    public void actUpdateTodo(Task task, String category, String title, String description, LocalDate dueday, String priority) {
+    public void actUpdateTodo(Task task, String category, String title, String description, LocalDate dueday, String priority, VBox container) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = dueday.format(formatter);
 
@@ -344,30 +341,31 @@ public class Startscreen {
         if (dbResponse < 0) {
             return;
         }
-
-        String selectedDate = task.getDateFaelligkeitsdatum().toString();
-
-        if(Objects.equals(selectedDate, getCurrentDate())) {
-            vboxDueToday.getChildren().add(addToDo(task));
-        } else {
-            vboxOtherTasks.getChildren().add(addToDo(task));
-        }
+        updateVboxes(vboxDueToday, vboxOtherTasks, container, task);
     }
 
-    public void actCloseToDo(Task task) {
+    public void actCloseToDo(Task task, VBox container) {
         int dbResponse = Database.closeTodo(task.getTodoID());
+
         //ToDO: besseres Handling
         if (dbResponse < 0) {
             return;
         }
-        String selectedDate = task.getDateFaelligkeitsdatum().toString();
 
-        //ToDo: Weg finden die VBox zu löschen
-        if(Objects.equals(selectedDate, getCurrentDate())) {
-           //vboxDueToday.getChildren().remove(addToDo(task));
-        } else {
-            //vboxOtherTasks.getChildren().remove(addToDo(task));
+        task.setStatus("closed");
+
+        updateVboxes(vboxDueToday, vboxOtherTasks, container, task);
+    }
+    public void actDeleteToDo(Task task, VBox container) {
+        int dbResponse = Database.deleteTodo(task.getTodoID());
+        //ToDO: besseres Handling
+        if (dbResponse < 0) {
+            return;
         }
+
+        task.setStatus("closed");
+
+        updateVboxes(vboxDueToday, vboxOtherTasks, container, task);
     }
 
     public String getCurrentDate() {
@@ -378,5 +376,21 @@ public class Startscreen {
 
     public void closeStage(Stage currentStage) {
         currentStage.close();
+    }
+
+    public void updateVboxes(VBox today, VBox other, VBox container, Task task) {
+        String selectedDate = task.getDateFaelligkeitsdatum();
+
+        if (today.getChildren().contains(container)) {
+            today.getChildren().remove(container);
+        } else other.getChildren().remove(container);
+
+        if(Objects.equals(task.getStatus(), "open")) {
+            if(Objects.equals(selectedDate, getCurrentDate())) {
+                today.getChildren().add(addToDo(task));
+            } else {
+                other.getChildren().add(addToDo(task));
+            }
+        }
     }
 }

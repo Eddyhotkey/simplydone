@@ -117,6 +117,23 @@ router.get('/close_todo', async (req, res) => {
     res.send(response);
     conn.close();
 });
+router.get('/delete_todo', async (req, res) => {
+    const todoid = req.query.todoid;
+    const conn = await dbConnection();
+    let response = '';
+
+    if (!todoid) {
+        return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
+    }
+    try {
+        let data =  await delete_todo_in_database(conn, todoid);
+        response = `{"affectedRows":${data.affectedRows}}`;
+    } catch (e) {
+        console.log(e);
+    }
+    res.send(response);
+    conn.close();
+});
 
 async function add_todo_to_database(conn, userid, category, title, description, dueday, priority) {
     try {
@@ -140,7 +157,17 @@ async function update_todo_in_database(conn, category, title, description, dueda
 
 async function close_todo_in_database(conn, todoid) {
     try {
-        const data = await conn.query("UPDATE `ToDo-Eintrag` SET Status = 'close' WHERE ToDoID = ?", [todoid]);
+        const data = await conn.query("UPDATE `ToDo-Eintrag` SET Status = 'closed' WHERE ToDoID = ?", [todoid]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function delete_todo_in_database(conn, todoid) {
+    try {
+        const data = await conn.query("DELETE FROM `ToDo-Eintrag` WHERE ToDoID = ?", [todoid]);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);
