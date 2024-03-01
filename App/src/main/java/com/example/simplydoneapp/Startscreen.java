@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -38,6 +39,7 @@ public class Startscreen {
     public Button btnCategoryScene;
     public Button btnToDoScene;
     public Button btnProfileScene;
+    public VBox vboxLeft;
     int userID = 1;
     private Loginscreen loginscreen;
 
@@ -397,8 +399,125 @@ public class Startscreen {
         }
     }
 
+    private LocalDate currentDate;
+    public void initCalender() {
+        GridPane gridCalender = createCalendarGrid();
+
+        Label currentMonth = new Label();
+
+        Button previousMonthButton = new Button("<<");
+        previousMonthButton.setOnAction(e -> updateCalendar(-1, currentMonth));
+
+        Button resetMonthButton = new Button("**");
+        resetMonthButton.setOnAction(e -> updateCalendar(0, currentMonth));
+
+        Button nextMonthButton = new Button(">>");
+        nextMonthButton.setOnAction(e -> updateCalendar(1, currentMonth));
+
+        VBox root = new VBox();
+        HBox headRow = new HBox();
+
+        headRow.getChildren().addAll(currentMonth, previousMonthButton, resetMonthButton, nextMonthButton);
+        root.getChildren().addAll(headRow, gridCalender);
+
+        vboxLeft.getChildren().add(root);
+    }
+
+    private GridPane createCalendarGrid() {
+        currentDate = LocalDate.now();
+
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                if(i == 0) {
+                    Label label = new Label();
+                    label.setText(initWeekdays(j));
+                    label.setMinSize(50, 20);
+                    label.setAlignment(Pos.CENTER);
+                    grid.add(label, j, i);
+                } else {
+                    Button cell = new Button();
+                    cell.setMinSize(50, 38);
+                    grid.add(cell, j, i);
+                }
+            }
+        }
+        return grid;
+    }
+
+    private String initWeekdays(int i) {
+        return switch (i) {
+            case 0 -> "Mo";
+            case 1 -> "Tu";
+            case 2 -> "We";
+            case 3 -> "Th";
+            case 4 -> "Fr";
+            case 5 -> "Sa";
+            case 6 -> "So";
+            default -> "error";
+        };
+    }
+
+    private String initMonth(String month) {
+        return switch (month) {
+            case "JANUARY" -> "Januar";
+            case "FEBRUARY" -> "Februar";
+            case "MARCH" -> "März";
+            case "APRIL" -> "April";
+            case "MAY" -> "Mai";
+            case "JUNE" -> "Juni";
+            case "JULY" -> "Juli";
+            case "AUGUST" -> "August";
+            case "SEPTEMBER" -> "September";
+            case "OCTOBER" -> "Oktober";
+            case "NOVEMBER" -> "November";
+            case "DECEMBER" -> "Dezember";
+            default -> "error";
+        };
+    }
+
+    private void updateCalendar(int monthOffset, Label currentMonth) {
+        if(monthOffset == 0) {
+            currentDate = LocalDate.now();
+        } else {
+            currentDate = currentDate.plusMonths(monthOffset);
+        }
+        currentMonth.setText(initMonth(String.valueOf(currentDate.getMonth())) + " " + currentDate.getYear());
+
+        VBox parent = (VBox) vboxLeft.getChildrenUnmodifiable().getFirst();
+        GridPane calendarGrid = (GridPane) parent.getChildren().get(1);
+
+        calendarGrid.getChildren().forEach(node -> {
+            if(node instanceof Button) {
+                Button cell = (Button) node;
+                cell.setText("");
+            }
+        });
+
+        int daysInMonth = currentDate.lengthOfMonth();
+        int dayOfMonth = 1;
+        int startingDayOfWeek = currentDate.withDayOfMonth(1).getDayOfWeek().getValue();
+
+        for (int i = 1; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (i == 1 && j < startingDayOfWeek) {
+                    continue;
+                }
+                if (dayOfMonth > daysInMonth) {
+                    break;
+                }
+
+                Button cell = (Button) calendarGrid.getChildren().get(i * 7 + j - 1);
+                cell.setText(String.valueOf(dayOfMonth));
+                dayOfMonth++;
+            }
+        }
+    }
+
     public void actCategoryScene(ActionEvent actionEvent) {
-        Category categoryScene = new Category();
+        Categoryscreen categoryScene = new Categoryscreen();
         categoryScene.openCategory((Stage) btnCategoryScene.getScene().getWindow());
     }
 
