@@ -101,6 +101,11 @@
   -fx-prompt-text-fill: #fff;
 }
 
+.category--container {
+  -fx-background-color: #f2f2f2;
+  -fx-border-radius: 8px;
+}
+
 .scroll--container {
   -fx-background-insets: 0;
   -fx-padding: 0;
