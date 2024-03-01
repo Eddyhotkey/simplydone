@@ -440,6 +440,7 @@ public class Startscreen {
                 } else {
                     Button cell = new Button();
                     cell.setMinSize(50, 38);
+                    cell.setOnAction(e -> getCalenderToDos(Integer.parseInt(cell.getText()), currentDate.getMonthValue(), currentDate.getYear()));
                     grid.add(cell, j, i);
                 }
             }
@@ -514,6 +515,11 @@ public class Startscreen {
                 dayOfMonth++;
             }
         }
+    }
+
+    public void getCalenderToDos(Integer day, Integer month, Integer year) {
+        LocalDate date = new LocalDate(year, month, day);
+        Database.getCalenderToDos(userID, date);
     }
 
     public void actCategoryScene(ActionEvent actionEvent) {
