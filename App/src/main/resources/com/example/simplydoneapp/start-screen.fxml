@@ -79,20 +79,8 @@
                <children>
                   <HBox layoutY="-2.0" prefHeight="658.0" prefWidth="814.0" styleClass="dashboard--background">
                      <children>
-                        <VBox prefHeight="550.0" prefWidth="750.0">
-                           <children>
-                              <GridPane fx:id="gridCalender">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                           </children></VBox>
+                        <VBox fx:id="vboxLeft" prefHeight="550.0" prefWidth="750.0">
+                        </VBox>
                         <VBox prefHeight="550.0" prefWidth="750.0">
                            <children>
                               <Label prefHeight="62.0" prefWidth="384.0" styleClass="h1Title" text="Fällig heute">
