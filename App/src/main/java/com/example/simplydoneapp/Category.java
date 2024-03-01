@@ -10,16 +10,7 @@ import java.awt.*;
 
 public class Category {
 
-    protected void openCategory(Stage startscreen) {
-        AnchorPane test = new AnchorPane();
-        VBox box = new VBox();
-        DatePicker labeldas = new DatePicker();
-        box.getChildren().add(labeldas);
+    private int categoryid;
+    private String categoryName;
 
-        test.getChildren().add(box);
-
-        Scene scene = new Scene(test, 1314, 799);
-        startscreen.setScene(scene);
-        startscreen.show();
-    }
 }
