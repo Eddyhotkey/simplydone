@@ -63,6 +63,7 @@ public class Loginscreen {
                         startscreen.getUserData();
                         startscreen.fillTodayTasks();
                         startscreen.fillOtherTasks();
+                        startscreen.initCalender();
                     } else {
                         errorLabel.setText("Passwort ist nicht korrekt!");
                     }
