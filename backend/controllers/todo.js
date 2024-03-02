@@ -135,6 +135,15 @@ router.get('/delete_todo', async (req, res) => {
     conn.close();
 });
 
+router.get('/get_calender_todos', async (req, res) => {
+    const userid = req.query.userid;
+    const date = req.query.date;
+    const conn = await dbConnection();
+    let response = await get_calender_todos(conn, userid, date);
+    res.send(response);
+    conn.close();
+});
+
 async function add_todo_to_database(conn, userid, category, title, description, dueday, priority) {
     try {
         const data = await conn.query("INSERT INTO `ToDo-Eintrag` (UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status) VALUES(?,?,?,?,?,?,?)", [userid, '1', title, description, dueday, priority, "open"]);
@@ -187,8 +196,8 @@ async function get_all_open_todos(conn, userid) {
 
 async function get_all_open_todos_today(conn, userid) {
     try {
-        const data = await conn.query("SELECT ToDoID, UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ? AND Fälligkeitsdatum = CURRENT_DATE", [userid, 'open']);
-        return data;
+        return await conn.query("SELECT ToDoID, UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ? AND Fälligkeitsdatum = CURRENT_DATE", [userid, 'open']);
+
     } catch (error) {
         console.error('Error querying the database:', error);
         throw error;
@@ -197,6 +206,17 @@ async function get_all_open_todos_today(conn, userid) {
 async function get_all_open_other_todos(conn, userid) {
     try {
         const data = await conn.query("SELECT ToDoID, UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ? AND Fälligkeitsdatum <> CURRENT_DATE", [userid, 'open']);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+
+async function get_calender_todos(conn, userid, date) {
+    try {
+        const data = await conn.query("SELECT ToDoID, UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ? AND Fälligkeitsdatum = ?", [userid, 'open', date]);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);

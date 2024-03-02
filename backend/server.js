@@ -9,10 +9,12 @@ app.get('/', (req, res) => {
 // Include route files
 const usersRoute = require('./controllers/users');
 const todoRoute = require('./controllers/todo');
+const categoryRoute = require('./controllers/category');
 
 // Use routes
 app.use('/users', usersRoute);
 app.use('/todo', todoRoute);
+app.use('/category', categoryRoute);
 
 const port = 1337;
 
