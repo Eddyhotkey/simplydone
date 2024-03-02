@@ -541,10 +541,12 @@ public class Startscreen {
 
     public void actCategoryScene(ActionEvent actionEvent) {
         Categoryscreen categoryScene = new Categoryscreen();
-        categoryScene.openCategory((Stage) btnCategoryScene.getScene().getWindow());
+        categoryScene.openCategory((Stage) btnCategoryScene.getScene().getWindow(), this.userID);
     }
 
     public void actToDoScene(ActionEvent actionEvent) {
+        ToDoscreen todoScene = new ToDoscreen();
+        todoScene.openTodoscreen((Stage) btnToDoScene.getScene().getWindow(), this.userID);
     }
 
     public void actProfileScene(ActionEvent actionEvent) {
