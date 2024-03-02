@@ -138,9 +138,9 @@ public  class Database {
         return -1;
     }
 
-    public static List<Task> getCalenderToDos(int todoid, LocalDate date) {
+    public static List<Task> getCalenderToDos(int userid, LocalDate date) {
         String apiUrl = apiBaseUrl + "todo/get_calender_todos?"
-                + "todoid=" + todoid
+                + "userid=" + userid
                 + "&date=" + date;
 
         return apiCallMultipleObjects(apiUrl);
