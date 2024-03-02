@@ -36,13 +36,22 @@ public  class Database {
         return null;
     }
 
-    private static List<Task> apiCallMultipleObjects(String url) {
+    private static Response apiCallBase(String url) {
         try {
             Request request = new Request.Builder()
                     .url(url)
                     .build();
-            Response response = client.newCall(request).execute();
 
+            return client.newCall(request).execute();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    private static List<Task> apiCallMultipleTasksObjects(String url) {
+        try {
+            Response response = apiCallBase(url);
             if (response.isSuccessful()) {
                 String responseBody = response.body().string();
 
@@ -52,6 +61,24 @@ public  class Database {
                 List<Task> taskList = gson.fromJson(responseBody, listType);
 
                 return taskList;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    private static List<Category> apiCallMultipleCategoriesObjects(String url) {
+        try {
+            Response response = apiCallBase(url);
+            if (response.isSuccessful()) {
+                String responseBody = response.body().string();
+
+                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+                Type listType = new TypeToken<List<Category>>() {}.getType();
+
+                List<Category> CategoryList = gson.fromJson(responseBody, listType);
+
+                return CategoryList;
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -79,21 +106,21 @@ public  class Database {
         String apiUrl = apiBaseUrl + "todo/get_all_open_todos?"
                 + "userid=" + userid;
 
-        return apiCallMultipleObjects(apiUrl);
+        return apiCallMultipleTasksObjects(apiUrl);
     }
 
     public static List<Task> getAllOpenToDosToday(int userid) {
         String apiUrl = apiBaseUrl + "todo/get_all_open_todos_today?"
                 + "userid=" + userid;
 
-        return apiCallMultipleObjects(apiUrl);
+        return apiCallMultipleTasksObjects(apiUrl);
     }
 
     public static List<Task> getAllOpenToDosOther(int userid) {
         String apiUrl = apiBaseUrl + "todo/get_all_open_other_todos?"
                 + "userid=" + userid;
 
-        return apiCallMultipleObjects(apiUrl);
+        return apiCallMultipleTasksObjects(apiUrl);
     }
     public static int updateCurrentTodo(String category, String title, String description, LocalDate dueday, String priority, int todoid) {
         //ToDo GetCategory Methode für CategoryID
@@ -143,6 +170,26 @@ public  class Database {
                 + "userid=" + userid
                 + "&date=" + date;
 
-        return apiCallMultipleObjects(apiUrl);
+        return apiCallMultipleTasksObjects(apiUrl);
+    }
+
+    public static int addNewCategory(int userid, String title) {
+        String apiUrl = apiBaseUrl + "category/add_category?"
+                + "userid="         + userid
+                + "&title="         + title;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("CategoryID").getAsInt();
+        }
+        return -1;
+    }
+
+    public static List<Category> getAllCategories(int userid) {
+        String apiUrl = apiBaseUrl + "category/get_all_categories?"
+                + "userid=" + userid;
+
+        return apiCallMultipleCategoriesObjects(apiUrl);
     }
 }
