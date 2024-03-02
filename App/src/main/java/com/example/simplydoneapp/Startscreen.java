@@ -7,9 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -420,7 +418,9 @@ public class Startscreen {
         headRow.getChildren().addAll(currentMonth, previousMonthButton, resetMonthButton, nextMonthButton);
         root.getChildren().addAll(headRow, gridCalender);
 
-        vboxLeft.getChildren().add(root);
+        vboxLeft.getChildren().addFirst(root);
+
+        updateCalendar(0, currentMonth);
     }
 
     private GridPane createCalendarGrid() {
@@ -428,6 +428,11 @@ public class Startscreen {
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
+
+        VBox calenderTodos = new VBox();
+        ScrollPane scrollPane = new ScrollPane(calenderTodos);
+
+        vboxLeft.getChildren().add(scrollPane);
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
@@ -440,7 +445,7 @@ public class Startscreen {
                 } else {
                     Button cell = new Button();
                     cell.setMinSize(50, 38);
-                    cell.setOnAction(e -> getCalenderToDos(Integer.parseInt(cell.getText()), currentDate.getMonthValue(), currentDate.getYear()));
+                    cell.setOnAction(e -> getCalenderToDos(calenderTodos,Integer.parseInt(cell.getText()), currentDate.getMonthValue(), currentDate.getYear()));
                     grid.add(cell, j, i);
                 }
             }
@@ -517,9 +522,21 @@ public class Startscreen {
         }
     }
 
-    public void getCalenderToDos(Integer day, Integer month, Integer year) {
-        LocalDate date = new LocalDate(year, month, day);
-        Database.getCalenderToDos(userID, date);
+    protected void getCalenderToDos(VBox calenderTodos, Integer day, Integer month, Integer year) {
+        LocalDate date = LocalDate.of(year, month, day);
+
+        List<Task> data = Database.getCalenderToDos(userID, date);
+
+        calenderTodos.getChildren().clear();
+        calenderTodos.requestLayout();
+
+        if (data != null) {
+            for (Task task : data) {
+                calenderTodos.getChildren().add(addToDo(task));
+            }
+        }
+        calenderTodos.setSpacing(10);
+        calenderTodos.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
     }
 
     public void actCategoryScene(ActionEvent actionEvent) {
