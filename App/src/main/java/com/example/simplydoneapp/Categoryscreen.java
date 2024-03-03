@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Categoryscreen {
     int userid;
@@ -55,8 +56,10 @@ public class Categoryscreen {
     }
 
     protected void actNewCategory(VBox categoryVBox, String name) {
-        Category newCategory = new Category(Database.addNewCategory(this.userid, name), name);
-        addCategory(categoryVBox, newCategory);
+        if(!Objects.equals(name, "")) {
+            Category newCategory = new Category(Database.addNewCategory(this.userid, name), name);
+            addCategory(categoryVBox, newCategory);
+        }
     }
 
     protected void loadCategories(VBox categoryVBox) {
