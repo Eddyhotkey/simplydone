@@ -21,7 +21,7 @@ import java.util.Objects;
 public class Categoryscreen {
     int userid;
 
-    protected void openCategory(Stage startscreen, int userid) {
+    protected void openCategory(Stage startscreen, Scene startscene, int userid) {
         this.userid = userid;
 
         AnchorPane body = new AnchorPane();
@@ -29,14 +29,8 @@ public class Categoryscreen {
         VBox container = new VBox();
         VBox categoryList = new VBox();
 
-        body.setPrefWidth(Double.MAX_VALUE);
-        body.setPrefHeight(Double.MAX_VALUE);
-
-        container.setAlignment(Pos.CENTER);
         container.setPrefWidth(700);
-        container.setPrefHeight(500);
-        categoryList.setPrefWidth(650);
-        categoryList.setPrefHeight(450);
+        container.setPrefHeight(700);
 
         categoryList.setMaxSize(700, 700);
         container.setMaxSize(700, 700);
@@ -47,6 +41,7 @@ public class Categoryscreen {
         AnchorPane.setRightAnchor(container, (body.getWidth() - container.getWidth()) / 2);
 
         Button logoButton = new Button();
+        logoButton.setOnAction(e -> backToStartscreen(startscreen, startscene));
         logoButton.getStyleClass().add("button--image");
         Image imageLogo = new Image(getClass().getResource("images/Logo_simplyDone.png").toExternalForm());
         ImageView imageView = new ImageView(imageLogo);
@@ -88,20 +83,28 @@ public class Categoryscreen {
 
 
         ScrollPane scrollCategory = new ScrollPane(categoryList);
-
-        scrollCategory.setPrefWidth(700);
-        scrollCategory.setPrefHeight(500);
-        scrollCategory.setMaxSize(700, 500);
+        scrollCategory.setFitToWidth(true);
 
         loadCategories(categoryList);
         container.getChildren().add(scrollCategory);
 
         body.getChildren().add(container);
 
+        container.prefWidthProperty().bind(body.widthProperty());
+        container.prefHeightProperty().bind(body.heightProperty());
+
+        body.widthProperty().addListener((obs, oldVal, newVal) -> updateContainerPosition(container));
+        body.heightProperty().addListener((obs, oldVal, newVal) -> updateContainerPosition(container));
+
+
         Scene scene = new Scene(body, 1314, 799);
         startscreen.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
         startscreen.show();
+    }
+
+    protected void backToStartscreen(Stage startscreen,Scene startscene) {
+        startscreen.setScene(startscene);
     }
 
     protected void actNewCategory(VBox categoryVBox, String name) {
@@ -147,5 +150,17 @@ public class Categoryscreen {
         categoryVBox.getChildren().add(container);
     }
 
+    private void updateContainerPosition(VBox container) {
+
+        double top = 100;
+        double right = 200;
+        double left = 200;
+        double bottom = 100;
+
+        AnchorPane.setTopAnchor(container, top);
+        AnchorPane.setRightAnchor(container, right);
+        AnchorPane.setLeftAnchor(container, left);
+        AnchorPane.setBottomAnchor(container, bottom);
+    }
 
 }
