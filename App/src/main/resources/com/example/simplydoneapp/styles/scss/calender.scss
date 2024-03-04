@@ -1,0 +1,19 @@
+.calender{
+
+  &--headrow {
+    -fx-padding: 15px;
+  }
+
+  &--cell {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+
+    &:hover {
+      -fx-background-color: $primary-light;
+    }
+    &:focused {
+      -fx-background-color: $primary-light;
+    }
+  }
+}

@@ -369,7 +369,6 @@ public class Startscreen {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = dueday.format(formatter);
 
-        //TOdo FIX CATEGORY
         task.setTitle(title);
         task.setDescription(description);
         task.setCategory(categoryid);
@@ -441,6 +440,7 @@ public class Startscreen {
         GridPane gridCalender = createCalendarGrid();
 
         Label currentMonth = new Label();
+        currentMonth.getStyleClass().add("headline--bold");
 
         Button previousMonthButton = new Button("<<");
         previousMonthButton.setOnAction(e -> updateCalendar(-1, currentMonth));
@@ -455,6 +455,9 @@ public class Startscreen {
         HBox headRow = new HBox();
 
         headRow.getChildren().addAll(currentMonth, previousMonthButton, resetMonthButton, nextMonthButton);
+        headRow.setAlignment(Pos.CENTER_LEFT);
+        headRow.setSpacing(15);
+        headRow.getStyleClass().add("calender--headrow");
         root.getChildren().addAll(headRow, gridCalender);
 
         vboxLeft.getChildren().addFirst(root);
@@ -470,6 +473,7 @@ public class Startscreen {
 
         VBox calenderTodos = new VBox();
         ScrollPane scrollPane = new ScrollPane(calenderTodos);
+        scrollPane.getStyleClass().addAll("scroll--container", "container--spacing");
 
         vboxLeft.getChildren().add(scrollPane);
 
@@ -477,12 +481,14 @@ public class Startscreen {
             for (int j = 0; j < 7; j++) {
                 if(i == 0) {
                     Label label = new Label();
+                    label.getStyleClass().add("headline--bold");
                     label.setText(initWeekdays(j));
                     label.setMinSize(50, 20);
                     label.setAlignment(Pos.CENTER);
                     grid.add(label, j, i);
                 } else {
                     Button cell = new Button();
+                    cell.getStyleClass().add("calender--cell");
                     cell.setMinSize(50, 38);
                     cell.setOnAction(e -> getCalenderToDos(calenderTodos,Integer.parseInt(cell.getText()), currentDate.getMonthValue(), currentDate.getYear()));
                     grid.add(cell, j, i);
