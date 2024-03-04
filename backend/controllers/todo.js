@@ -144,9 +144,26 @@ router.get('/get_calender_todos', async (req, res) => {
     conn.close();
 });
 
+router.get('/get_shared_calender_todos', async (req, res) => {
+    const userid = req.query.userid;
+    const date = req.query.date;
+    const conn = await dbConnection();
+    let response = await get_shared_calender_todos(conn, userid, date);
+    res.send(response);
+    conn.close();
+});
+
+router.get('/get_ToDos_From_Shared_Categories', async (req, res) => {
+    const userid = req.query.userid;
+    const conn = await dbConnection();
+    let response = await get_ToDos_From_Shared_Categories(conn, userid);
+    res.send(response);
+    conn.close();
+});
+
 async function add_todo_to_database(conn, userid, category, title, description, dueday, priority) {
     try {
-        const data = await conn.query("INSERT INTO `ToDo-Eintrag` (UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status) VALUES(?,?,?,?,?,?,?)", [userid, '1', title, description, dueday, priority, "open"]);
+        const data = await conn.query("INSERT INTO `ToDo-Eintrag` (UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status) VALUES(?,?,?,?,?,?,?)", [userid, category, title, description, dueday, priority, "open"]);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);
@@ -156,7 +173,7 @@ async function add_todo_to_database(conn, userid, category, title, description, 
 
 async function update_todo_in_database(conn, category, title, description, dueday, priority, todoid) {
     try {
-        const data = await conn.query("UPDATE `ToDo-Eintrag` SET CategoryID = ?, Titel = ?, Beschreibung = ?, Fälligkeitsdatum = ?, Priorität = ? WHERE ToDoID = ?", ['1', title, description, dueday, priority, todoid]);
+        const data = await conn.query("UPDATE `ToDo-Eintrag` SET CategoryID = ?, Titel = ?, Beschreibung = ?, Fälligkeitsdatum = ?, Priorität = ? WHERE ToDoID = ?", [category, title, description, dueday, priority, todoid]);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);
@@ -217,6 +234,25 @@ async function get_all_open_other_todos(conn, userid) {
 async function get_calender_todos(conn, userid, date) {
     try {
         const data = await conn.query("SELECT ToDoID, UserID, CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` WHERE UserID = ? AND Status = ? AND Fälligkeitsdatum = ?", [userid, 'open', date]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+async function get_shared_calender_todos(conn, userid, date) {
+    try {
+        const data = await conn.query("SELECT tblTodo.ToDoID, tblTodo.UserID, tblTodo.CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` AS tblTodo LEFT JOIN `ToDo-Kategorie` ON tblTodo.CategoryID = `ToDo-Kategorie`.CategoryID LEFT JOIN `Benutzer-Sharing` ON `ToDo-Kategorie`.CategoryID = `Benutzer-Sharing`.CategoryID WHERE EmpfängerUserID = ? AND Status = ? AND Fälligkeitsdatum = ?", [userid, 'open', date]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function get_ToDos_From_Shared_Categories(conn, userid) {
+    try {
+        const data = await conn.query("SELECT tblTodo.ToDoID, tblTodo.UserID, tblTodo.CategoryID, Titel, Beschreibung, Fälligkeitsdatum, Priorität, Status FROM `ToDo-Eintrag` AS tblTodo LEFT JOIN `ToDo-Kategorie` ON tblTodo.CategoryID = `ToDo-Kategorie`.CategoryID LEFT JOIN `Benutzer-Sharing` ON `ToDo-Kategorie`.CategoryID = `Benutzer-Sharing`.CategoryID WHERE EmpfängerUserID = ? AND Status = ?", [userid, 'open']);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);

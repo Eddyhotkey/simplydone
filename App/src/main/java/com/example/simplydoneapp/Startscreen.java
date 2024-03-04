@@ -2,6 +2,8 @@ package com.example.simplydoneapp;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -38,6 +40,7 @@ public class Startscreen {
     public Button btnToDoScene;
     public Button btnProfileScene;
     public VBox vboxLeft;
+    public Button btnCustomFilter;
     int userID = 1;
     private Loginscreen loginscreen;
 
@@ -130,8 +133,14 @@ public class Startscreen {
         newDate.setMaxWidth(Double.MAX_VALUE);
         todoPopupContainer.getChildren().add(newDate);
 
-        TextField newCategory = new TextField();
+        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
+        List<Category> categoryList = Database.getAllCategories(userID);
+        categoryObservableList.addAll(categoryList);
+        ComboBox<Category> newCategory = new ComboBox<>();
+        newCategory.setItems(categoryObservableList);
         newCategory.getStyleClass().add("form--widget");
+        newCategory.getStyleClass().add("form--widget--select");
+        newCategory.setMaxWidth(Double.MAX_VALUE);
         newCategory.setPromptText("Kategorie");
         todoPopupContainer.getChildren().add(newCategory);
 
@@ -148,7 +157,7 @@ public class Startscreen {
         newSubmit.setMaxWidth(Double.MAX_VALUE);
         newSubmit.getStyleClass().add("form--submit");
         newSubmit.setOnAction(event -> {
-            createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue()));
+            createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getSelectionModel().getSelectedItem().getCategoryID(), String.valueOf(newPriority.getValue()));
             closeStage(todoPopup);
         });
         todoPopupContainer.getChildren().add(newSubmit);
@@ -160,9 +169,10 @@ public class Startscreen {
         todoPopup.show();
     }
 
-    private void createToDo(int userID, String title, String description, LocalDate dueday, String category, String priority) {
+    private void createToDo(int userID, String title, String description, LocalDate dueday, int category, String priority) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = dueday.format(formatter);
+
         Task task = new Task(userID, title, description, formattedDate, category, priority);
 
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), dueday, task.getPriority()));
@@ -173,6 +183,7 @@ public class Startscreen {
 
     public void fillTodayTasks() {
         List<Task> data = Database.getAllOpenToDosToday(this.userID);
+        data.addAll(Database.getToDosFromSharedCategories(this.userID));
         if (data != null) {
             for (Task task : data) {
                 vboxDueToday.getChildren().add(addToDo(task));
@@ -184,6 +195,7 @@ public class Startscreen {
 
     public void fillOtherTasks() {
         List<Task> data = Database.getAllOpenToDosOther(this.userID);
+        data.addAll(Database.getToDosFromSharedCategories(this.userID));
         if (data != null) {
             for (Task task : data) {
                 vboxOtherTasks.getChildren().add(addToDo(task));
@@ -278,10 +290,27 @@ public class Startscreen {
         newDate.setValue(LocalDate.parse(task.getDateFaelligkeitsdatum(), formatter));
         todoPopupContainer.getChildren().add(newDate);
 
-        TextField newCategory = new TextField();
+        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
+        List<Category> categoryList = Database.getAllCategories(task.getUserID());
+        categoryObservableList.addAll(categoryList);
+        ComboBox<Category> newCategory = new ComboBox<>();
+        newCategory.setItems(categoryObservableList);
         newCategory.getStyleClass().add("form--widget");
-        newCategory.setPromptText("Kategorie");
-        newCategory.setText(task.getCategory());
+        newCategory.getStyleClass().add("form--widget--select");
+        newCategory.setMaxWidth(Double.MAX_VALUE);
+        int selectedCategoryID = task.getCategory();
+        int selectedIndex = -1;
+        for (int i = 0; i < categoryObservableList.size(); i++) {
+            if (selectedCategoryID == categoryObservableList.get(i).getCategoryID()) {
+                selectedIndex = i;
+                break;
+            }
+        }
+        if (selectedIndex != -1) {
+            newCategory.getSelectionModel().select(selectedIndex);
+        } else {
+            newCategory.setPromptText("Kategorie");
+        }
         todoPopupContainer.getChildren().add(newCategory);
 
         ComboBox newPriority = new ComboBox();
@@ -297,7 +326,7 @@ public class Startscreen {
         editChange.setMaxWidth(Double.MAX_VALUE);
         editChange.getStyleClass().add("form--submit");
         editChange.setOnAction(event -> {
-            actUpdateTodo(task, newCategory.getText(), newTitle.getText(), newDescripton.getText(), newDate.getValue(), String.valueOf(newPriority.getValue()), container);
+            actUpdateTodo(task, newCategory.getSelectionModel().getSelectedItem().getCategoryID(), newTitle.getText(), newDescripton.getText(), newDate.getValue(), String.valueOf(newPriority.getValue()), container);
             closeStage(todoPopup);
         });
         todoPopupContainer.getChildren().add(editChange);
@@ -327,13 +356,14 @@ public class Startscreen {
         todoPopup.show();
     }
 
-    public void actUpdateTodo(Task task, String category, String title, String description, LocalDate dueday, String priority, VBox container) {
+    public void actUpdateTodo(Task task, int categoryid, String title, String description, LocalDate dueday, String priority, VBox container) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = dueday.format(formatter);
 
+        //TOdo FIX CATEGORY
         task.setTitle(title);
         task.setDescription(description);
-        task.setCategory(category);
+        task.setCategory(categoryid);
         task.setDateFaelligkeitsdatum(formattedDate);
         task.setFälligkeitsdatum(formattedDate);
         task.setPriority(priority);
@@ -526,6 +556,7 @@ public class Startscreen {
         LocalDate date = LocalDate.of(year, month, day);
 
         List<Task> data = Database.getCalenderToDos(userID, date);
+        data.addAll(Database.getSharedCalenderToDos(this.userID, date));
 
         calenderTodos.getChildren().clear();
         calenderTodos.requestLayout();
@@ -541,14 +572,101 @@ public class Startscreen {
 
     public void actCategoryScene(ActionEvent actionEvent) {
         Categoryscreen categoryScene = new Categoryscreen();
-        categoryScene.openCategory((Stage) btnCategoryScene.getScene().getWindow(), this.userID);
+        categoryScene.openCategory((Stage) btnCategoryScene.getScene().getWindow(), btnCategoryScene.getScene(), this.userID);
     }
 
     public void actToDoScene(ActionEvent actionEvent) {
         ToDoscreen todoScene = new ToDoscreen();
-        todoScene.openTodoscreen((Stage) btnToDoScene.getScene().getWindow(), this.userID);
+        todoScene.openTodoscreen((Stage) btnToDoScene.getScene().getWindow(), btnToDoScene.getScene(), this.userID);
     }
 
     public void actProfileScene(ActionEvent actionEvent) {
+    }
+
+    public void actCustomFilter(ActionEvent actionEvent) {
+        Stage todoPopup = new Stage();
+        Stage currentStage = (Stage) btnCustomFilter.getScene().getWindow();
+        todoPopup.initOwner(currentStage);
+
+        VBox cutsomFilterPopupContainer = new VBox(15);
+        cutsomFilterPopupContainer.getStyleClass().add("task--create--container");
+
+        Label customLabel = new Label("Filter einstellen");
+        customLabel.getStyleClass().add("h1Title");
+        cutsomFilterPopupContainer.getChildren().add(customLabel);
+
+        Label labelDays = new Label("x Tage für die Zukunft");
+        cutsomFilterPopupContainer.getChildren().add(labelDays);
+        TextField amountDays = new TextField();
+        amountDays.getStyleClass().add("form--widget");
+        amountDays.setPromptText("x");
+        cutsomFilterPopupContainer.getChildren().add(amountDays);
+
+        ComboBox priority = new ComboBox();
+        priority.getStyleClass().add("form--widget");
+        priority.getStyleClass().add("form--widget--select");
+        priority.setPromptText("Priorität");
+        priority.getItems().addAll("niedrig", "mittel", "hoch");
+        priority.setValue("mittel");
+        priority.setMaxWidth(Double.MAX_VALUE);
+        cutsomFilterPopupContainer.getChildren().add(priority);
+
+        Label labelLimit = new Label("max. x Einträge");
+        cutsomFilterPopupContainer.getChildren().add(labelLimit);
+
+        TextField limit = new TextField();
+        limit.getStyleClass().add("form--widget");
+        limit.setPromptText("x");
+        cutsomFilterPopupContainer.getChildren().add(limit);
+
+        ComboBox order = new ComboBox();
+        order.getStyleClass().add("form--widget");
+        order.getStyleClass().add("form--widget--select");
+        order.setPromptText("Priorität");
+        order.getItems().addAll("DESC", "ASC");
+        order.setValue("ASC");
+        order.setMaxWidth(Double.MAX_VALUE);
+        cutsomFilterPopupContainer.getChildren().add(order);
+
+        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
+        List<Category> categoryList = Database.getAllCategories(this.userID);
+        categoryObservableList.addAll(categoryList);
+        ComboBox<Category> filterCategory = new ComboBox<>();
+        filterCategory.setItems(categoryObservableList);
+        filterCategory.getStyleClass().add("form--widget");
+        filterCategory.getStyleClass().add("form--widget--select");
+        filterCategory.setMaxWidth(Double.MAX_VALUE);
+        filterCategory.setPromptText("Kategorie");
+        cutsomFilterPopupContainer.getChildren().add(filterCategory);
+
+        Button filterSubmit = new Button("Filter einstellen");
+        filterSubmit.setMaxWidth(Double.MAX_VALUE);
+        filterSubmit.getStyleClass().add("form--submit");
+        filterSubmit.setOnAction(event -> {
+            createJSONString(amountDays.getText(), priority.getValue().toString(), limit.getText(), order.getValue().toString(), filterCategory.getSelectionModel().getSelectedItem().getCategoryID());
+            closeStage(todoPopup);
+        });
+        cutsomFilterPopupContainer.getChildren().add(filterSubmit);
+
+        Button filterLoeschen = new Button("Filter löschen");
+        filterLoeschen.setMaxWidth(Double.MAX_VALUE);
+        filterLoeschen.getStyleClass().add("form--submit");
+        filterLoeschen.setOnAction(event -> {
+            //foo();
+            closeStage(todoPopup);
+        });
+        cutsomFilterPopupContainer.getChildren().add(filterLoeschen);
+
+
+        Scene todoPopupScene = new Scene(cutsomFilterPopupContainer, 300, 500);
+        todoPopupScene.getStylesheets().clear();
+        todoPopupScene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
+        todoPopup.setScene(todoPopupScene);
+        todoPopup.show();
+    }
+
+    protected void createJSONString(String days, String priority, String limit, String order, int category){
+        String filterString = "{\"interval\":\""+days+"\",\"priority\":\""+priority+"\",\"limit\":\""+limit+"\",\"order\":\""+order+"\",\"category\":\""+category+"\"}";
+        System.out.println(filterString);
     }
 }

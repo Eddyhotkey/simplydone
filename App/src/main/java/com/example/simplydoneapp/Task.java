@@ -20,19 +20,19 @@ public class Task {
     public String Fälligkeitsdatum;
     public String DateFaelligkeitsdatum;
     @Expose
-    public String CategoryID;
+    public int CategoryID;
     @Expose
     public String Priorität;
     @Expose
     public String Status;
 
 
-    public Task(int userID, String title, String description, String dueDay, String category, String priority) {
+    public Task(int userID, String title, String description, String dueDay, int categoryID, String priority) {
         this.UserID = userID;
         this.Titel = title;
         this.Beschreibung = description;
         this.Fälligkeitsdatum = dueDay;
-        this.CategoryID = category;
+        this.CategoryID = categoryID;
         this.Priorität = priority;
         this.Status = "open";
     }
@@ -69,7 +69,7 @@ public class Task {
         return Fälligkeitsdatum;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return CategoryID;
     }
 
@@ -89,7 +89,7 @@ public class Task {
         this.Fälligkeitsdatum = dueDay;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.CategoryID = category;
     }
 
