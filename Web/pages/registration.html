@@ -1,0 +1,65 @@
+<!-- registration.html -->
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Registrierung</title>
+  <link rel="stylesheet" href="../src/styles/main.css">
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <div class="header-logo-container">
+      <img src="../src/images/svg/main_logo.svg" alt="Logo SimplyDone" class="header-logo">
+    </div>
+    <nav class="navigation">
+      <ul class="navigation-list">
+        <li class="navigation-item">
+          <a href="#" class="navigation-link">
+            <img src="../src/images/svg/log-out.svg" alt="Sich abmelden Icon">
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="app" id="app">
+    <div class="container">
+      <div class="form-lage--container">
+        <h1 class="app-title">Sich Registrieren!</h1>
+        <form class="form-lage" id="registerFormElement" action="../src/backend/new_user.php"
+              method="post">
+          <label class="visually-hidden" for="newLogin">E-Mail</label>
+          <input class="form-lage--textfield" type="text" id="newLogin" name="newLogin" placeholder="Benutzername">
+          <label class="visually-hidden" for="newMail">E-Mail</label>
+          <input class="form-lage--textfield" type="text" id="newMail" name="newMail" placeholder="E-Mail">
+          <label class="visually-hidden" for="newUsername">Vorname:</label>
+          <input class="form-lage--textfield" type="text" id="newUsername" name="newUsername" placeholder="Vorname">
+          <label class="visually-hidden" for="newUserSurname">Nachname</label>
+          <input class="form-lage--textfield" type="text" id="newUserSurname" name="newUserSurname" placeholder="Nachname" >
+          <div class="form-lage--textfield-container">
+            <input class="form-lage--textfield form-lage--pass" name="newPassword" type="password" id="newPassword"
+                   placeholder="Passwort">
+            <button type="button" class="form-lage--pass-on" onclick="togglePasswordVisibility('newPassword')"></button>
+          </div>
+          <div class="form-lage--textfield-container">
+            <input class="form-lage--textfield form-lage--pass" type="password" id="confirmPassword" placeholder="Passwort bestätigen">
+            <button type="button" class="form-lage--pass-on" onclick="togglePasswordVisibility('confirmPassword')"></button>
+          </div>
+
+          <button class="form-lage--submit" type="submit"> Sich registrieren</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+</footer>
+<script src="../src/scripts/scripts.js"></script>
+</body>
+</html>

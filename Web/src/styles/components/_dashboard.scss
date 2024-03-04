@@ -1,0 +1,20 @@
+.dashboard {
+	background: $grey-color;
+	padding: 20px;
+	border-radius: 8px;
+
+	&-tasks-title {
+		@include main_title;
+		margin-bottom: rem-calc( 20px );
+	}
+
+	&-tasks-current {
+		margin-bottom: rem-calc( 30px );
+	}
+
+	&-tasks-upcoming {
+		.task {
+			background-color: $primary-light;
+		}
+	}
+}

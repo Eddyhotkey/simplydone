@@ -1,0 +1,75 @@
+.task {
+	position: relative;
+	margin-bottom: rem-calc( 10px );
+	padding: rem-calc( 10px );
+	font-family: "Montserrat", sans-serif;
+	color: $light-color;
+	background-color: $primary_color;
+	border-radius: rem-calc( 8px );
+	&__title {
+		max-width: calc(100% - 30px);
+		margin-bottom: rem-calc( 5px );
+		font-size: rem-calc( 16px );
+	}
+	&__text {
+		margin-bottom: rem-calc( 5px );
+		font-size: rem-calc( 14px );
+
+	}
+	&__info {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		max-width: calc( 100% - 30px );
+		font-weight: 500;
+		font-size: rem-calc( 10px );
+		p {
+			margin-bottom: rem-calc( 10px );
+		}
+	}
+
+	&__nav {
+		display: flex;
+		align-items: center;
+		justify-content: left;
+		button {
+			@include main_button;
+			width: fit-content;
+			width: -moz-fit-content;
+			padding: rem-calc( 5px ) rem-calc( 10px );
+			font-size: rem-calc( 12px );
+			background-color: $light-color;
+			color: $primary_color;
+
+			&:first-child {
+				margin-right: rem-calc( 10px );
+			}
+
+			&:hover {
+				background-color: $grey-color;
+			}
+		}
+	}
+
+	input[type="checkbox"] {
+		position: absolute;
+		top: rem-calc( 10px );
+		right: rem-calc( 10px );
+		-webkit-appearance: none; /* Удаляем стандартное отображение веб-браузера */
+		-moz-appearance: none;
+		appearance: none;
+		width: rem-calc(20px); /* Задаем размер */
+		height: rem-calc(20px);
+		border: rem-calc(2px) solid $light-color; /* Добавляем контур */
+		border-radius: 50%; /* Скругляем углы */
+		outline: none; /* Убираем контур при фокусировке */
+		cursor: pointer;
+		z-index: 100;
+	}
+
+	input[type="checkbox"]:checked {
+		background-color: $light-color; /* Цвет фона при выборе */
+		border-color: $light-color; /* Цвет контура при выборе */
+	}
+}
+

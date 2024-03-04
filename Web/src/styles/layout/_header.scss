@@ -1,6 +1,10 @@
 .header {
+	position: sticky;
+	top: 0;
+	left: 0;
 	margin-bottom: rem-calc( 30px );
 	padding: rem-calc( 20px ) 0;
+	background-color: #fff;
 	.container {
 		display: flex;
 		align-items: center;
@@ -20,6 +24,7 @@
 			padding: 0;
 			list-style: none;
 		}
+		
 
 		&-item {
 			margin-right: rem-calc( 20px );

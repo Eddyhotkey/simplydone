@@ -11851,6 +11851,7 @@ body {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 1rem;
+  color: #272727;
 }
 
 /*** components ***/
@@ -11899,7 +11900,7 @@ body {
   height: 1.5rem;
   margin-top: -1.25rem;
   background-color: transparent;
-  background-image: url("../images/svg/eye.svg");
+  background-image: url("../images/svg/eye-off.svg");
   border: none;
   box-shadow: none;
   z-index: 10;
@@ -11913,7 +11914,7 @@ body {
   height: 1.5rem;
   margin-top: -1.25rem;
   background-color: transparent;
-  background-image: url("../images/svg/eye-off.svg");
+  background-image: url("../images/svg/eye.svg");
   border: none;
   box-shadow: none;
   z-index: 10;
@@ -11947,6 +11948,11 @@ body {
   transition-duration: 0.3s;
 }
 
+@media (max-width: 991.98px) {
+  .profile {
+    margin-bottom: 1.875rem;
+  }
+}
 .profile-image {
   max-width: 20.375rem;
   margin-bottom: 1.875rem;
@@ -11980,10 +11986,277 @@ body {
   transition-duration: 0.3s;
 }
 
+.calendar {
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+}
+@media (max-width: 991.98px) {
+  .calendar {
+    margin-bottom: 1.875rem;
+  }
+}
+.calendar-title {
+  flex: 1;
+  margin-bottom: 0;
+  margin-right: 1.875rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.5rem;
+}
+.calendar-navigation {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.3125rem;
+}
+.calendar-button {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.3125rem;
+  background-color: #F76C6A;
+  border: none;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition-duration: 0.3s;
+}
+.calendar-button:hover {
+  transform: scale(0.9);
+  transition-duration: 0.3s;
+}
+.calendar-button:last-child {
+  margin-right: 0;
+}
+.calendar-button--prev {
+  background-image: url("../images/svg/left.svg");
+}
+.calendar-button--next {
+  background-image: url("../images/svg/right.svg");
+}
+.calendar-button--current {
+  background-image: url("../images/svg/undo.svg");
+  background-size: 1rem;
+}
+.calendar table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.calendar th, .calendar td {
+  text-align: center;
+  padding: 0.3125rem;
+}
+.calendar td.active {
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  background-color: #F76C6A;
+}
+
+.dashboard {
+  background: #f2f2f2;
+  padding: 20px;
+  border-radius: 8px;
+}
+.dashboard-tasks-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.8125rem;
+  margin-bottom: 1.25rem;
+}
+.dashboard-tasks-current {
+  margin-bottom: 1.875rem;
+}
+.dashboard-tasks-upcoming .task {
+  background-color: #F79E89;
+}
+
+.modal-task button.close {
+  position: absolute;
+  top: 0.9375rem;
+  right: 1.25rem;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: none;
+  transform: rotate(45deg);
+}
+.modal-task button.close img {
+  width: 2rem;
+}
+.modal-task__title {
+  margin-bottom: 0.625rem;
+  font-family: "Bebas Neue", sans-serif;
+  color: #fff;
+}
+.modal-task input, .modal-task textarea, .modal-task select {
+  margin-bottom: 0.625rem;
+  padding: 0.625rem;
+  color: #fff;
+  background-color: #F79E89;
+  border: 0.0625rem solid #fff;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.modal-task input::placeholder, .modal-task textarea::placeholder, .modal-task select::placeholder {
+  color: #fff;
+}
+.modal-task label {
+  color: #fff;
+}
+.modal-task select {
+  padding: 0.3125rem;
+  cursor: pointer;
+}
+.modal-task input[type=date] {
+  margin-right: 1.25rem;
+  padding: 0.3125rem;
+  font-size: 0.75rem;
+  color: #F76C6A;
+  background-color: #fff;
+  cursor: pointer;
+}
+.modal-task__content {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding: 1.25rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  border: none;
+  background-color: #F79E89;
+}
+@media (min-width: 992px) {
+  .modal-task__content {
+    width: auto;
+    min-width: 31.25rem;
+    padding: 1.25rem;
+    border-top-left-radius: 1.5rem;
+  }
+}
+.modal-task__button {
+  padding: 0.625rem 3.125rem;
+  background-color: #F76C6A;
+  box-shadow: none;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  transition-duration: 0.3s;
+  width: fit-content;
+  width: -moz-fit-content;
+  max-width: 10rem;
+  margin: 0 auto 0.625rem;
+  padding: 0.3125rem 0.625rem;
+  background-color: #fff;
+  color: #F79E89;
+}
+.modal-task__button:hover {
+  background-color: #F79E89;
+  transition-duration: 0.3s;
+}
+.modal-task__button:hover {
+  background-color: #F76C6A;
+  color: #fff;
+}
+.modal-task__button:last-child {
+  margin-bottom: 0;
+}
+
+.task {
+  position: relative;
+  margin-bottom: 0.625rem;
+  padding: 0.625rem;
+  font-family: "Montserrat", sans-serif;
+  color: #fff;
+  background-color: #F76C6A;
+  border-radius: 0.5rem;
+}
+.task__title {
+  max-width: calc(100% - 30px);
+  margin-bottom: 0.3125rem;
+  font-size: 1rem;
+}
+.task__text {
+  margin-bottom: 0.3125rem;
+  font-size: 0.875rem;
+}
+.task__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: calc( 100% - 30px );
+  font-weight: 500;
+  font-size: 0.625rem;
+}
+.task__info p {
+  margin-bottom: 0.625rem;
+}
+.task__nav {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.task__nav button {
+  padding: 0.625rem 3.125rem;
+  background-color: #F76C6A;
+  box-shadow: none;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  transition-duration: 0.3s;
+  width: fit-content;
+  width: -moz-fit-content;
+  padding: 0.3125rem 0.625rem;
+  font-size: 0.75rem;
+  background-color: #fff;
+  color: #F76C6A;
+}
+.task__nav button:hover {
+  background-color: #F79E89;
+  transition-duration: 0.3s;
+}
+.task__nav button:first-child {
+  margin-right: 0.625rem;
+}
+.task__nav button:hover {
+  background-color: #f2f2f2;
+}
+.task input[type=checkbox] {
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+  -webkit-appearance: none;
+  /* Удаляем стандартное отображение веб-браузера */
+  -moz-appearance: none;
+  appearance: none;
+  width: 1.25rem;
+  /* Задаем размер */
+  height: 1.25rem;
+  border: 0.125rem solid #fff;
+  /* Добавляем контур */
+  border-radius: 50%;
+  /* Скругляем углы */
+  outline: none;
+  /* Убираем контур при фокусировке */
+  cursor: pointer;
+  z-index: 100;
+}
+.task input[type=checkbox]:checked {
+  background-color: #fff;
+  /* Цвет фона при выборе */
+  border-color: #fff;
+  /* Цвет контура при выборе */
+}
+
 /*** layouts ***/
 .header {
+  position: sticky;
+  top: 0;
+  left: 0;
   margin-bottom: 1.875rem;
   padding: 1.25rem 0;
+  background-color: #fff;
 }
 .header .container {
   display: flex;

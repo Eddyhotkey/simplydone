@@ -1,0 +1,75 @@
+.calendar {
+	padding: 20px;
+	border-radius: 8px;
+	background: #fff;
+
+	@include media-breakpoint-down( lg ) {
+		margin-bottom: rem-calc( 30px );
+	}
+
+	&-title {
+		flex: 1;
+		margin-bottom: 0;
+		margin-right: rem-calc( 30px );
+		font-family: "Bebas Neue", sans-serif;
+		font-size: rem-calc( 24px );
+	}
+	&-navigation {
+		display: flex;
+		//align-items: center;
+		justify-content: flex-start;
+		margin-bottom: rem-calc( 5px );
+	}
+	&-button {
+		display: block;
+		width: rem-calc( 24px );
+		height: rem-calc( 24px );
+		margin-right: rem-calc( 5px );
+		background-color: $primary-color;
+		//background-image: url( "../images/svg/left.svg" );
+		border: none;
+		border-radius: 50%;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		transition-duration: .3s;
+		&:hover {
+			transform: scale( .9 );
+			transition-duration: .3s;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		&--prev {
+			background-image: url( "../images/svg/left.svg" );
+		}
+		&--next {
+			background-image: url( "../images/svg/right.svg" );
+		}
+		&--current {
+			background-image: url( "../images/svg/undo.svg" );
+			background-size: rem-calc( 16px );
+		}
+	}
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	th, td {
+		text-align: center;
+		padding: rem-calc( 5px );
+	}
+
+	td.active {
+		width: rem-calc( 30px );
+		height: rem-calc( 30px );
+		border-radius: rem-calc( 8px );
+		color: $light-color;
+		background-color: $primary-color;
+
+	}
+}
+

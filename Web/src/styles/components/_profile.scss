@@ -1,4 +1,7 @@
 .profile {
+	@include media-breakpoint-down( lg ) {
+		margin-bottom: rem-calc( 30px );
+	}
 
 	&-image {
 		max-width: rem-calc( 326px );
