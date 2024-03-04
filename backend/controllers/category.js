@@ -43,6 +43,74 @@ router.get('/get_all_categories', async (req, res) => {
     conn.close();
 });
 
+router.get('/create_sharing', async (req, res) => {
+    const userid = req.query.userid;
+    const categoryid = req.query.categoryid;
+    const recieverid = req.query.recieverid;
+    const conn = await dbConnection();
+    let response = '';
+
+    let data = await create_sharing(conn, categoryid, userid, recieverid);
+    let sharingID = data.insertId;
+    response += `{"SharingID":${sharingID}}`;
+    res.send(response);
+    conn.close();
+});
+
+router.get('/delete_category', async (req, res) => {
+    const categoryid = req.query.categoryid;
+    const conn = await dbConnection();
+    let response = '';
+
+    if (!categoryid) {
+        return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
+    }
+    try {
+        let data =  await delete_category_in_database(conn, categoryid);
+        response = `{"affectedRows":${data.affectedRows}}`;
+    } catch (e) {
+        console.log(e);
+    }
+    res.send(response);
+    conn.close();
+});
+
+router.get('/delete_sharing', async (req, res) => {
+    const sharingid = req.query.sharingid;
+    const conn = await dbConnection();
+    let response = '';
+
+    if (!sharingid) {
+        return res.status(400).json({ error: 'Parameter fehlt in der Anfrage.' });
+    }
+    try {
+        let data =  await delete_sharing_in_database(conn, sharingid);
+        response = `{"affectedRows":${data.affectedRows}}`;
+    } catch (e) {
+        console.log(e);
+    }
+    res.send(response);
+    conn.close();
+});
+
+router.get('/get_shared_users_for_category', async (req, res) => {
+    const userid = req.query.userid;
+    const categoryid = req.query.categoryid;
+    const conn = await dbConnection();
+    let response = await get_shared_users_for_category(conn, userid, categoryid);
+    res.send(response);
+    conn.close();
+});
+
+router.get('/get_category_name', async (req, res) => {
+    const categoryid = req.query.categoryid;
+    const conn = await dbConnection();
+    let data = await get_category_name(conn, categoryid);
+    let response = data[0];
+    res.send(response);
+    conn.close();
+});
+
 
 
 async function add_category(conn, userid, title) {
@@ -55,9 +123,63 @@ async function add_category(conn, userid, title) {
     }
 }
 
+async function create_sharing(conn, categoryString, userString, recieverString) {
+    try {
+        let categoryid = parseInt(categoryString);
+        let userid = parseInt(userString);
+        let recieverid = parseInt(recieverString);
+
+        const data = await conn.query("INSERT INTO `Benutzer-Sharing` (CategoryID, UserID, EmpfängerUserID) VALUES(?,?,?)", [categoryid, userid, recieverid]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
 async function get_all_categories(conn, userid) {
     try {
         const data = await conn.query("SELECT CategoryID, Kategoriename FROM `ToDo-Kategorie` WHERE UserID = ?", [userid]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function delete_category_in_database(conn, categoryid) {
+    try {
+        const data = await conn.query("DELETE FROM `ToDo-Kategorie` WHERE CategoryID = ?", [parseInt(categoryid)]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function delete_sharing_in_database(conn, sharingID) {
+    try {
+        const data = await conn.query("DELETE FROM `Benutzer-Sharing` WHERE SharingID = ?", [sharingID]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function get_shared_users_for_category(conn, userid, categoryid) {
+    try {
+        const data = await conn.query("SELECT SharingID, CategoryID, EmpfängerUserID FROM `Benutzer-Sharing` WHERE UserID = ? AND CategoryID = ?", [userid, categoryid]);
+        return data;
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
+async function get_category_name(conn, categoryid) {
+    try {
+        const data = await conn.query("SELECT Kategoriename FROM `ToDo-Kategorie` WHERE CategoryID = ?", [categoryid]);
         return data;
     } catch (error) {
         console.error('Error querying the database:', error);

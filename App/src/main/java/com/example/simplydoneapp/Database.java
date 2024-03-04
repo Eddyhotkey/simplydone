@@ -86,7 +86,50 @@ public  class Database {
         return null;
     }
 
-    public static int setNewToDo(int userid, String category, String title, String description, LocalDate dueday, String priority) {
+    private static List<Sharing> apiCallMultipleSharingObjects(String url) {
+        try {
+            Response response = apiCallBase(url);
+            if (response.isSuccessful()) {
+                String responseBody = response.body().string();
+
+                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+                Type listType = new TypeToken<List<Sharing>>() {}.getType();
+
+                List<Sharing> sharingList = gson.fromJson(responseBody, listType);
+
+                return sharingList;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static int getUserId(String username) {
+        String apiUrl = apiBaseUrl + "users/get_userid?"
+                + "username="         + username;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("UserID").getAsInt();
+        }
+        return -1;
+    }
+
+    public static String getUsername(int userid) {
+        String apiUrl = apiBaseUrl + "users/get-user-data?"
+                + "userid="         + userid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return String.valueOf(apiResponse.get("Username"));
+        }
+        return null;
+    }
+
+    public static int setNewToDo(int userid, int category, String title, String description, LocalDate dueday, String priority) {
         String apiUrl = apiBaseUrl + "todo/add_todo?"
                 + "userid="         + userid
                 + "&title="         + title
@@ -122,10 +165,7 @@ public  class Database {
 
         return apiCallMultipleTasksObjects(apiUrl);
     }
-    public static int updateCurrentTodo(String category, String title, String description, LocalDate dueday, String priority, int todoid) {
-        //ToDo GetCategory Methode für CategoryID
-        int categoryid = 1;
-
+    public static int updateCurrentTodo(int categoryid, String title, String description, LocalDate dueday, String priority, int todoid) {
         String apiUrl = apiBaseUrl + "todo/update_todo?"
                 + "category=" + categoryid
                 + "&title=" + title
@@ -173,6 +213,21 @@ public  class Database {
         return apiCallMultipleTasksObjects(apiUrl);
     }
 
+    public static List<Task> getSharedCalenderToDos(int userid, LocalDate date) {
+        String apiUrl = apiBaseUrl + "todo/get_shared_calender_todos?"
+                + "userid=" + userid
+                + "&date=" + date;
+
+        return apiCallMultipleTasksObjects(apiUrl);
+    }
+
+    public static List<Task> getToDosFromSharedCategories(int userid) {
+        String apiUrl = apiBaseUrl + "todo/get_ToDos_From_Shared_Categories?"
+                + "userid=" + userid;
+
+        return apiCallMultipleTasksObjects(apiUrl);
+    }
+
     public static int addNewCategory(int userid, String title) {
         String apiUrl = apiBaseUrl + "category/add_category?"
                 + "userid="         + userid
@@ -192,4 +247,64 @@ public  class Database {
 
         return apiCallMultipleCategoriesObjects(apiUrl);
     }
+
+    public static int createSharing(int userid, int categoryid, int recieverid) {
+        String apiUrl = apiBaseUrl + "category/create_sharing?"
+                + "userid=" + userid
+                + "&categoryid=" + categoryid
+                + "&recieverid=" + recieverid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("SharingID").getAsInt();
+        }
+        return -1;
+    }
+
+    public static int deleteSharing(int sharingid) {
+        String apiUrl = apiBaseUrl + "category/delete_sharing?"
+                + "sharingid=" + sharingid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("affectedRows").getAsInt();
+        }
+        return -1;
+    }
+
+    public static int deleteCategory(int categoryid) {
+        String apiUrl = apiBaseUrl + "category/delete_category?"
+                + "categoryid=" + categoryid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return apiResponse.get("affectedRows").getAsInt();
+        }
+        return -1;
+    }
+
+    public static String getCategoryName(int categoryid) {
+        String apiUrl = apiBaseUrl + "category/get_category_name?"
+                + "categoryid=" + categoryid;
+
+        JsonObject apiResponse = apiCallSingleObject(apiUrl);
+
+        if(apiResponse != null) {
+            return String.valueOf(apiResponse.get("Kategoriename"));
+        }
+        return null;
+    }
+
+    public static List<Sharing> getSharedUsersForCategory(int userid, int categoryid) {
+        String apiUrl = apiBaseUrl + "category/get_shared_users_for_category?"
+                + "userid=" + userid
+                + "&categoryid=" + categoryid;
+
+        return apiCallMultipleSharingObjects(apiUrl);
+    }
+
+
 }
