@@ -12,13 +12,9 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //FXMLLoader loginLoader = new FXMLLoader(HelloApplication.class.getResource("login-screen.fxml"));
-        //Parent loginRoot = loginLoader.load();
-        //Loginscreen loginscreen = loginLoader.getController();
-        FXMLLoader startscreen = new FXMLLoader(HelloApplication.class.getResource("start-screen.fxml"));
-        Parent loginRoot = startscreen.load();
-
-
+        FXMLLoader loginLoader = new FXMLLoader(HelloApplication.class.getResource("login-screen.fxml"));
+        Parent loginRoot = loginLoader.load();
+        Loginscreen loginscreen = loginLoader.getController();
 
         Scene scene = new Scene(loginRoot);
         scene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
