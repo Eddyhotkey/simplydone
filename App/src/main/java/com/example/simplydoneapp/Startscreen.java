@@ -40,6 +40,7 @@ public class Startscreen {
     public Button btnToDoScene;
     public Button btnProfileScene;
     public VBox vboxLeft;
+    public Button btnCustomFilter;
     int userID = 1;
     private Loginscreen loginscreen;
 
@@ -297,7 +298,19 @@ public class Startscreen {
         newCategory.getStyleClass().add("form--widget");
         newCategory.getStyleClass().add("form--widget--select");
         newCategory.setMaxWidth(Double.MAX_VALUE);
-        newCategory.setPromptText("Kategorie");
+        int selectedCategoryID = task.getCategory();
+        int selectedIndex = -1;
+        for (int i = 0; i < categoryObservableList.size(); i++) {
+            if (selectedCategoryID == categoryObservableList.get(i).getCategoryID()) {
+                selectedIndex = i;
+                break;
+            }
+        }
+        if (selectedIndex != -1) {
+            newCategory.getSelectionModel().select(selectedIndex);
+        } else {
+            newCategory.setPromptText("Kategorie");
+        }
         todoPopupContainer.getChildren().add(newCategory);
 
         ComboBox newPriority = new ComboBox();
@@ -568,5 +581,92 @@ public class Startscreen {
     }
 
     public void actProfileScene(ActionEvent actionEvent) {
+    }
+
+    public void actCustomFilter(ActionEvent actionEvent) {
+        Stage todoPopup = new Stage();
+        Stage currentStage = (Stage) btnCustomFilter.getScene().getWindow();
+        todoPopup.initOwner(currentStage);
+
+        VBox cutsomFilterPopupContainer = new VBox(15);
+        cutsomFilterPopupContainer.getStyleClass().add("task--create--container");
+
+        Label customLabel = new Label("Filter einstellen");
+        customLabel.getStyleClass().add("h1Title");
+        cutsomFilterPopupContainer.getChildren().add(customLabel);
+
+        Label labelDays = new Label("x Tage für die Zukunft");
+        cutsomFilterPopupContainer.getChildren().add(labelDays);
+        TextField amountDays = new TextField();
+        amountDays.getStyleClass().add("form--widget");
+        amountDays.setPromptText("x");
+        cutsomFilterPopupContainer.getChildren().add(amountDays);
+
+        ComboBox priority = new ComboBox();
+        priority.getStyleClass().add("form--widget");
+        priority.getStyleClass().add("form--widget--select");
+        priority.setPromptText("Priorität");
+        priority.getItems().addAll("niedrig", "mittel", "hoch");
+        priority.setValue("mittel");
+        priority.setMaxWidth(Double.MAX_VALUE);
+        cutsomFilterPopupContainer.getChildren().add(priority);
+
+        Label labelLimit = new Label("max. x Einträge");
+        cutsomFilterPopupContainer.getChildren().add(labelLimit);
+
+        TextField limit = new TextField();
+        limit.getStyleClass().add("form--widget");
+        limit.setPromptText("x");
+        cutsomFilterPopupContainer.getChildren().add(limit);
+
+        ComboBox order = new ComboBox();
+        order.getStyleClass().add("form--widget");
+        order.getStyleClass().add("form--widget--select");
+        order.setPromptText("Priorität");
+        order.getItems().addAll("DESC", "ASC");
+        order.setValue("ASC");
+        order.setMaxWidth(Double.MAX_VALUE);
+        cutsomFilterPopupContainer.getChildren().add(order);
+
+        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
+        List<Category> categoryList = Database.getAllCategories(this.userID);
+        categoryObservableList.addAll(categoryList);
+        ComboBox<Category> filterCategory = new ComboBox<>();
+        filterCategory.setItems(categoryObservableList);
+        filterCategory.getStyleClass().add("form--widget");
+        filterCategory.getStyleClass().add("form--widget--select");
+        filterCategory.setMaxWidth(Double.MAX_VALUE);
+        filterCategory.setPromptText("Kategorie");
+        cutsomFilterPopupContainer.getChildren().add(filterCategory);
+
+        Button filterSubmit = new Button("Filter einstellen");
+        filterSubmit.setMaxWidth(Double.MAX_VALUE);
+        filterSubmit.getStyleClass().add("form--submit");
+        filterSubmit.setOnAction(event -> {
+            createJSONString(amountDays.getText(), priority.getValue().toString(), limit.getText(), order.getValue().toString(), filterCategory.getSelectionModel().getSelectedItem().getCategoryID());
+            closeStage(todoPopup);
+        });
+        cutsomFilterPopupContainer.getChildren().add(filterSubmit);
+
+        Button filterLoeschen = new Button("Filter löschen");
+        filterLoeschen.setMaxWidth(Double.MAX_VALUE);
+        filterLoeschen.getStyleClass().add("form--submit");
+        filterLoeschen.setOnAction(event -> {
+            //foo();
+            closeStage(todoPopup);
+        });
+        cutsomFilterPopupContainer.getChildren().add(filterLoeschen);
+
+
+        Scene todoPopupScene = new Scene(cutsomFilterPopupContainer, 300, 500);
+        todoPopupScene.getStylesheets().clear();
+        todoPopupScene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
+        todoPopup.setScene(todoPopupScene);
+        todoPopup.show();
+    }
+
+    protected void createJSONString(String days, String priority, String limit, String order, int category){
+        String filterString = "{\"interval\":\""+days+"\",\"priority\":\""+priority+"\",\"limit\":\""+limit+"\",\"order\":\""+order+"\",\"category\":\""+category+"\"}";
+        System.out.println(filterString);
     }
 }

@@ -11,10 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -93,11 +90,16 @@
                                     <VBox fx:id="vboxDueToday" prefHeight="500.0" prefWidth="364.0" />
                                  </content>
                               </ScrollPane>
-                              <Label prefHeight="62.0" prefWidth="383.0" styleClass="h1Title" text="Andere Aufgaben">
-                                 <font>
-                                    <Font size="42.0" />
-                                 </font>
-                              </Label>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label prefHeight="62.0" prefWidth="383.0" styleClass="h1Title" text="Andere Aufgaben">
+                                       <font>
+                                          <Font size="42.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="btnCustomFilter" mnemonicParsing="false" onAction="#actCustomFilter" text="=" />
+                                 </children>
+                              </HBox>
                               <ScrollPane styleClass="scroll--container">
                                  <content>
                                     <VBox fx:id="vboxOtherTasks" prefHeight="500.0" prefWidth="364.0" />
