@@ -31,6 +31,7 @@ public class ToDoscreen {
         container.setPrefSize(700, 700);
         todoList.setPrefSize(700, 700);
         body.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        body.getStyleClass().addAll("dashboard--container");
 
         Button logoButton = new Button();
         logoButton.setOnAction(e -> backToStartscreen(startscreen, startscene));
@@ -69,7 +70,9 @@ public class ToDoscreen {
         scrollTodo.setPrefSize(600, 700);
         scrollTodo.setFitToWidth(true);
         loadTodos(todoList);
+        scrollTodo.getStyleClass().addAll("dashboard--background", "category--container");
         container.getChildren().add(scrollTodo);
+
 
         body.getChildren().add(container);
 
