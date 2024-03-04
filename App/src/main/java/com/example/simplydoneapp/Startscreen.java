@@ -2,6 +2,8 @@ package com.example.simplydoneapp;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -130,8 +132,14 @@ public class Startscreen {
         newDate.setMaxWidth(Double.MAX_VALUE);
         todoPopupContainer.getChildren().add(newDate);
 
-        TextField newCategory = new TextField();
+        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
+        List<Category> categoryList = Database.getAllCategories(userID);
+        categoryObservableList.addAll(categoryList);
+        ComboBox<Category> newCategory = new ComboBox<>();
+        newCategory.setItems(categoryObservableList);
         newCategory.getStyleClass().add("form--widget");
+        newCategory.getStyleClass().add("form--widget--select");
+        newCategory.setMaxWidth(Double.MAX_VALUE);
         newCategory.setPromptText("Kategorie");
         todoPopupContainer.getChildren().add(newCategory);
 
@@ -148,7 +156,7 @@ public class Startscreen {
         newSubmit.setMaxWidth(Double.MAX_VALUE);
         newSubmit.getStyleClass().add("form--submit");
         newSubmit.setOnAction(event -> {
-            createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue()));
+            createToDo(userID, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getSelectionModel().getSelectedItem().getCategoryID(), String.valueOf(newPriority.getValue()));
             closeStage(todoPopup);
         });
         todoPopupContainer.getChildren().add(newSubmit);
@@ -160,9 +168,10 @@ public class Startscreen {
         todoPopup.show();
     }
 
-    private void createToDo(int userID, String title, String description, LocalDate dueday, String category, String priority) {
+    private void createToDo(int userID, String title, String description, LocalDate dueday, int category, String priority) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = dueday.format(formatter);
+
         Task task = new Task(userID, title, description, formattedDate, category, priority);
 
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), dueday, task.getPriority()));
@@ -173,6 +182,7 @@ public class Startscreen {
 
     public void fillTodayTasks() {
         List<Task> data = Database.getAllOpenToDosToday(this.userID);
+        data.addAll(Database.getToDosFromSharedCategories(this.userID));
         if (data != null) {
             for (Task task : data) {
                 vboxDueToday.getChildren().add(addToDo(task));
@@ -184,6 +194,7 @@ public class Startscreen {
 
     public void fillOtherTasks() {
         List<Task> data = Database.getAllOpenToDosOther(this.userID);
+        data.addAll(Database.getToDosFromSharedCategories(this.userID));
         if (data != null) {
             for (Task task : data) {
                 vboxOtherTasks.getChildren().add(addToDo(task));
@@ -278,10 +289,15 @@ public class Startscreen {
         newDate.setValue(LocalDate.parse(task.getDateFaelligkeitsdatum(), formatter));
         todoPopupContainer.getChildren().add(newDate);
 
-        TextField newCategory = new TextField();
+        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
+        List<Category> categoryList = Database.getAllCategories(task.getUserID());
+        categoryObservableList.addAll(categoryList);
+        ComboBox<Category> newCategory = new ComboBox<>();
+        newCategory.setItems(categoryObservableList);
         newCategory.getStyleClass().add("form--widget");
+        newCategory.getStyleClass().add("form--widget--select");
+        newCategory.setMaxWidth(Double.MAX_VALUE);
         newCategory.setPromptText("Kategorie");
-        newCategory.setText(task.getCategory());
         todoPopupContainer.getChildren().add(newCategory);
 
         ComboBox newPriority = new ComboBox();
@@ -297,7 +313,7 @@ public class Startscreen {
         editChange.setMaxWidth(Double.MAX_VALUE);
         editChange.getStyleClass().add("form--submit");
         editChange.setOnAction(event -> {
-            actUpdateTodo(task, newCategory.getText(), newTitle.getText(), newDescripton.getText(), newDate.getValue(), String.valueOf(newPriority.getValue()), container);
+            actUpdateTodo(task, newCategory.getSelectionModel().getSelectedItem().getCategoryID(), newTitle.getText(), newDescripton.getText(), newDate.getValue(), String.valueOf(newPriority.getValue()), container);
             closeStage(todoPopup);
         });
         todoPopupContainer.getChildren().add(editChange);
@@ -327,13 +343,14 @@ public class Startscreen {
         todoPopup.show();
     }
 
-    public void actUpdateTodo(Task task, String category, String title, String description, LocalDate dueday, String priority, VBox container) {
+    public void actUpdateTodo(Task task, int categoryid, String title, String description, LocalDate dueday, String priority, VBox container) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = dueday.format(formatter);
 
+        //TOdo FIX CATEGORY
         task.setTitle(title);
         task.setDescription(description);
-        task.setCategory(category);
+        task.setCategory(categoryid);
         task.setDateFaelligkeitsdatum(formattedDate);
         task.setFälligkeitsdatum(formattedDate);
         task.setPriority(priority);
@@ -526,6 +543,7 @@ public class Startscreen {
         LocalDate date = LocalDate.of(year, month, day);
 
         List<Task> data = Database.getCalenderToDos(userID, date);
+        data.addAll(Database.getSharedCalenderToDos(this.userID, date));
 
         calenderTodos.getChildren().clear();
         calenderTodos.requestLayout();
