@@ -16,8 +16,8 @@ public class Category {
     public String Kategoriename;
 
     public Category(int categoryID, String kategoriename) {
-        CategoryID = categoryID;
-        Kategoriename = kategoriename;
+        this.CategoryID = categoryID;
+        this.Kategoriename = kategoriename;
     }
 
     public int getCategoryID() {
@@ -33,6 +33,11 @@ public class Category {
     }
 
     public void setKategoriename(String kategoriename) {
-        Kategoriename = kategoriename;
+        this.Kategoriename = kategoriename;
+    }
+
+    @Override
+    public String toString() {
+        return this.Kategoriename;
     }
 }
