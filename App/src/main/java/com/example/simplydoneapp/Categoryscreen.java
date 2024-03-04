@@ -126,12 +126,75 @@ public class Categoryscreen {
         }
     }
 
-    protected void shareCategory() {
-        //ToDO
+    protected void shareCategory(Button button, int catgoryid, HBox sharedUserContainer) {
+        Stage sharePopup = new Stage();
+        Stage currentStage = (Stage) button.getScene().getWindow();
+        sharePopup.initOwner(currentStage);
+
+        VBox sharePopupContainer = new VBox(15);
+        sharePopupContainer.getStyleClass().add("task--create--container");
+
+        Label newLabel = new Label("Kategorie teilen");
+        newLabel.getStyleClass().add("h1Title");
+        sharePopupContainer.getChildren().add(newLabel);
+
+        TextField shareUser = new TextField();
+        shareUser.getStyleClass().add("form--widget");
+        shareUser.setPromptText("Benutzername");
+        sharePopupContainer.getChildren().add(shareUser);
+
+        Button shareSubmit = new Button("Kategorie teilen");
+        shareSubmit.setMaxWidth(Double.MAX_VALUE);
+        shareSubmit.getStyleClass().add("form--submit");
+        shareSubmit.setOnAction(event -> {
+            shareDatabase(shareUser.getText(), catgoryid, sharedUserContainer);
+            closeStage(sharePopup);
+        });
+        sharePopupContainer.getChildren().add(shareSubmit);
+
+        Scene sharePopupScene = new Scene(sharePopupContainer, 300, 220);
+        sharePopupScene.getStylesheets().clear();
+        sharePopupScene.getStylesheets().add(getClass().getResource("styles/css/base.css").toExternalForm());
+        sharePopup.setScene(sharePopupScene);
+        sharePopup.show();
     }
 
-    protected void deleteCategory() {
-        //ToDO
+    protected void shareDatabase(String user, int catgoryid, HBox sharedUserContainer) {
+        int sharingID = Database.createSharing(userid, catgoryid, Database.getUserId(user));
+        Sharing newSharing = new Sharing(sharingID, catgoryid, userid, Database.getUserId(user));
+
+        addToSharedList(sharedUserContainer, newSharing);
+    }
+
+    protected void addToSharedList(HBox sharedUserContainer, Sharing sharingObject) {
+        HBox singleShare = new HBox();
+
+        Button deleteShare = new Button("x");
+        deleteShare.getStyleClass().add("button--image");
+        deleteShare.setOnAction(e -> {
+                deleteShareFromDatabase(sharingObject.getSharingID());
+                deleteShareFromView(sharedUserContainer, singleShare);
+        });
+        singleShare.getChildren().add(deleteShare);
+
+        Label name = new Label(Database.getUsername(sharingObject.getEmpfängerUserID()));
+        singleShare.getChildren().add(name);
+
+        sharedUserContainer.getChildren().add(singleShare);
+    }
+
+    protected void deleteShareFromDatabase(int sharedId) {
+        Database.deleteSharing(sharedId);
+    }
+    protected void deleteShareFromView(HBox container, HBox child) {
+        container.getChildren().remove(child);
+    }
+
+    protected void deleteCategory(int categoryid, VBox categoryVBox, HBox viewElement, HBox sharedUser) {
+        if(sharedUser.getChildren().isEmpty()) {
+            Database.deleteCategory(categoryid);
+            categoryVBox.getChildren().remove(viewElement);
+        }
     }
 
     private void addCategory(VBox categoryVBox, Category category) {
@@ -140,13 +203,21 @@ public class Categoryscreen {
         Label categoryID = new Label(String.valueOf(category.getCategoryID()));
         Label categoryName = new Label(category.getKategoriename());
 
+        HBox sharedUser = new HBox();
+
+        List<Sharing> sharedWith = Database.getSharedUsersForCategory(userid, category.getCategoryID());
+
+        for(Sharing share : sharedWith) {
+            addToSharedList(sharedUser, share);
+        }
+
         Button shareCategory = new Button("share");
-        shareCategory.setOnAction(e -> shareCategory());
+        shareCategory.setOnAction(e -> shareCategory(shareCategory, category.getCategoryID(), sharedUser));
 
         Button deleteCategory = new Button("del");
-        deleteCategory.setOnAction(e -> deleteCategory());
+        deleteCategory.setOnAction(e -> deleteCategory(category.getCategoryID(), categoryVBox, container, sharedUser));
 
-        container.getChildren().addAll(categoryID, categoryName, shareCategory, deleteCategory);
+        container.getChildren().addAll(categoryID, categoryName, sharedUser, shareCategory, deleteCategory);
         categoryVBox.getChildren().add(container);
     }
 
@@ -161,6 +232,10 @@ public class Categoryscreen {
         AnchorPane.setRightAnchor(container, right);
         AnchorPane.setLeftAnchor(container, left);
         AnchorPane.setBottomAnchor(container, bottom);
+    }
+
+    public void closeStage(Stage currentStage) {
+        currentStage.close();
     }
 
 }
