@@ -1,0 +1,89 @@
+.modal-task {
+
+	button.close {
+		position: absolute;
+		top: rem-calc( 15px );
+		right: rem-calc( 20px );
+		width: rem-calc( 32px );
+		height: rem-calc( 32px );
+		border: none;
+		background: none;
+		transform: rotate( 45deg );
+		img {
+			width: rem-calc( 32px );
+		}
+	}
+
+	&__title {
+		margin-bottom: rem-calc( 10px );
+		font-family: "Bebas Neue", sans-serif;
+		color: $light-color;
+	}
+
+	input, textarea, select {
+		margin-bottom: rem-calc( 10px );
+		padding: rem-calc( 10px );
+		color: $light-color;
+		background-color: $primary-light;
+		border: rem-calc( 1px ) solid $light-color;
+		border-radius: rem-calc( 8px );
+		&::placeholder {
+			color: $light-color;
+		}
+		cursor: pointer;
+	}
+
+	label {
+		color: $light-color;
+	}
+
+	select {
+		padding: rem-calc( 5px );
+		cursor: pointer;
+	}
+
+	input[type="date"] {
+		margin-right: rem-calc( 20px );
+		padding: rem-calc( 5px );
+		font-size: rem-calc( 12px );
+		color: $primary-color;
+		background-color: $light-color;
+		cursor: pointer;
+	}
+
+	&__content {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 100%;
+		padding: rem-calc( 20px );
+		border-top-left-radius: rem-calc( 24px );
+		border-top-right-radius: rem-calc( 24px );
+		border: none;
+		background-color: $primary-light;
+		@include media-breakpoint-up( lg ) {
+			width: auto;
+			min-width: rem-calc( 500px );
+			padding: rem-calc( 20px );
+			border-top-left-radius: rem-calc( 24px );
+		}
+	}
+
+	&__button {
+		@include main_button;
+		width: fit-content;
+		width: -moz-fit-content;
+		max-width: rem-calc( 160px );
+		margin: 0 auto rem-calc( 10px );
+		padding: rem-calc( 5px ) rem-calc( 10px );
+		background-color: $light-color;
+		color: $primary-light;
+		&:hover {
+			background-color: $primary-color;
+			color: $light-color;
+		}
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

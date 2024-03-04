@@ -21,6 +21,7 @@ $grid-columns: 24;
 	"base/colors",
 	"utils/classes";
 
+
 /*** base ***/
 @import
 	"base/font-face",
@@ -32,7 +33,13 @@ $grid-columns: 24;
 @import
 	"components/app",
 	"components/form-lage",
-	"components/profile";
+	"components/profile",
+	"components/calender",
+	"components/dashboard",
+	"components/modal-task",
+	"components/task";
+
+
 /*** layouts ***/
 @import
 	"layout/header",
