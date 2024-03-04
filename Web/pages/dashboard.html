@@ -17,15 +17,13 @@
       <nav class="navigation">
         <ul class="navigation-list">
           <li class="navigation-item">
-            <a href="#" class="navigation-link">
+            <a href="#" id="add-task" class="navigation-link">
               <img src="../src/images/svg/plus-circle.svg" alt="Add Task Icon">
             </a>
           </li>
           <li class="navigation-item">
-            <a href="#" class="navigation-link">
-              <a href="#" class="navigation-link">
-                <img src="../src/images/svg/log-out.svg" alt="Sich abmelden Icon">
-              </a>
+            <a href="/"  id="logout" class="navigation-link navigation-link--logout">
+              <img src="../src/images/svg/log-out.svg" alt="Sich abmelden Icon">
             </a>
           </li>
         </ul>
@@ -42,14 +40,14 @@
             <div class="profile-container">
               <img src="../src/images/svg/Avatar.svg" alt="Profil-Avatar" class="profile-logo">
               <div class="profile-txt">
-                <p>
-                  Thomas
+                <p class="profile-name">
+                  <span id="vorname"></span>
                 </p>
-                <p>
-                  Müller
+                <p class="profile-surname">
+                  <span id="nachname"></span>
                 </p>
-                <p>
-                  thomas@mueller.de
+                <p class="profile-mail">
+                  <span id="email"></span>
                 </p>
               </div>
               <button class="profile-edit">
@@ -61,14 +59,51 @@
         <div class="col-24 col-lg-16 dashboard-col">
           <div class="dashboard">
             <div class="row">
-              <div class="col-24 col-12">
-                <div class="dashboard-calender">
+              <div class="col-24 col-lg-12">
+                <div class="calendar">
 
+                  <div class="calendar-navigation">
+                    <h2 id="month-title" class="calendar-title">Calendar</h2>
+                    <button onclick="previousMonth()" class="calendar-button calendar-button--prev">
+                      <span class="visually-hidden">
+                        Vorheriger Monat
+                      </span>
+                    </button>
+                    <button onclick="setCurrentMonth()" class="calendar-button calendar-button--current">
+                      <span class="visually-hidden">Aktueller Monat</span>
+                    </button>
+                    <button onclick="nextMonth()" class="calendar-button calendar-button--next">
+                      <span class="visually-hidden"> Nächster Monat </span>
+                    </button>
+                  </div>
+                  <table id="calendar">
+                    <thead>
+                    <tr>
+                      <th>Mo</th>
+                      <th>Di</th>
+                      <th>Mi</th>
+                      <th>Do</th>
+                      <th>Fr</th>
+                      <th>Sa</th>
+                      <th>So</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Die Tage werden hier mit JavaScript eingefügt -->
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <div class="col-24 col-12">
+              <div class="col-24 col-lg-12">
                 <div class="dashboard-tasks">
-
+                  <div class="dashboard-tasks-current">
+                    <h1 class="dashboard-tasks-title">Fällig heute</h1>
+                  </div>
+                  <div class="dashboard-tasks-upcoming">
+                    <h2 class="dashboard-tasks-title">
+                      Andere Aufgaben
+                    </h2>
+                  </div>
                 </div>
               </div>
             </div>
@@ -76,6 +111,44 @@
         </div>
       </div>
     </div>
+    <div id="taskModal" class="modal modal-task">
+      <div class="modal-content modal-task__content">
+        <button class="close"><img src="../src/images/svg/plus-circle.svg" alt="Add Task Icon"></button>
+        <h2 class="modal-task__title">Neue Aufgabe</h2>
+        <label for="taskTitle">
+          <span class="visually-hidden">
+            Titel:
+          </span>
+        </label>
+        <input type="text" id="taskTitle" name="taskTitle" required placeholder="Titel:">
+        <label for="taskDescription">
+          <span class="visually-hidden">
+            Beschreibung:
+          </span>
+        </label>
+        <textarea id="taskDescription" name="taskDescription" placeholder="Beschreibung:"></textarea>
+        <div class="modal-task__info d-flex mb-3">
+          <div class="d-flex flex-column mr-2">
+            <label for="taskDate">Datum:</label>
+            <input type="date" id="taskDate" name="taskDate" placeholder="">
+          </div>
+          <div class="d-flex flex-column">
+            <label for="taskPriority">Priorität:</label>
+            <select id="taskPriority" name="taskPriority">
+              <option value="hoch">Hoch</option>
+              <option value="mittel">Mittel</option>
+              <option value="niedrig">Niedrig</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="modal-task__button" id="addTaskBtn">Todo hinzufügen</button>
+      </div>
+    </div>
   </main>
+  <script src="../src/scripts/scripts.js"></script>
+  <script src="../src/scripts/calendar.js"></script>
+  <script src="../src/scripts/add-task.js"></script>
+  <script src="../src/scripts/profile.js"></script>
 </body>
 </html>
