@@ -45,6 +45,10 @@
   -fx-scale-x: 1.05;
 }
 
+.headline--bold {
+  -fx-font-weight: 700;
+}
+
 .form--widget {
   -fx-background-radius: 8px;
   -fx-background-color: none;
@@ -102,8 +106,24 @@
 }
 
 .category--container {
-  -fx-background-color: #f2f2f2;
+  -fx-padding: 25px;
   -fx-border-radius: 8px;
+}
+
+.topbar--padding-bottom {
+  -fx-padding: 0 0 10px 0;
+}
+
+.single--category {
+  -fx-padding: 10px;
+  -fx-border-width: 0 0 2px 0;
+  -fx-border-color: #272727;
+}
+
+.single-share {
+  -fx-background-color: #F5C7BC;
+  -fx-background-radius: 10px;
+  -fx-padding: 2px;
 }
 
 .scroll--container {
@@ -115,6 +135,10 @@
 }
 .scroll--container .corner {
   -fx-background-insets: 0;
+}
+
+.container--spacing {
+  -fx-padding: 10px;
 }
 
 .list-cell {
@@ -144,7 +168,7 @@
   -fx-background-color: #F79E89;
 }
 .todo--low {
-  -fx-background-color: #f2f2f2;
+  -fx-background-color: #F5C7BC;
 }
 .todo--edit {
   -fx-background-color: none;
@@ -163,6 +187,21 @@
 }
 .todo--done:hover {
   -fx-text-fill: #272727;
+}
+
+.calender--headrow {
+  -fx-padding: 15px;
+}
+.calender--cell {
+  -fx-background-color: transparent;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+}
+.calender--cell:hover {
+  -fx-background-color: #F79E89;
+}
+.calender--cell:focused {
+  -fx-background-color: #F79E89;
 }
 
 .form--lage--container {

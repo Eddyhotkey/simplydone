@@ -1,7 +1,22 @@
 .category {
   &--container {
-    -fx-background-color: $grey-color;
+    -fx-padding: 25px;
     -fx-border-radius: 8px;
   }
+}
 
+.topbar--padding-bottom {
+  -fx-padding: 0 0 10px 0;
+}
+
+.single--category {
+  -fx-padding: 10px;
+  -fx-border-width: 0 0 2px 0;
+  -fx-border-color: $dark-color;
+}
+
+.single-share {
+  -fx-background-color: $todo-low;
+  -fx-background-radius: 10px;
+  -fx-padding: 2px;
 }
