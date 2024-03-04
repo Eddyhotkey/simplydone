@@ -1,5 +1,7 @@
 package com.example.simplydoneapp;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -89,6 +91,7 @@ public class ToDoscreen {
 
     protected void loadTodos(VBox todoVBox) {
         List<Task> todoList = Database.getAllOpenToDos(this.userid);
+        todoList.addAll(Database.getToDosFromSharedCategories(this.userid));
 
         if (todoList != null) {
             for (Task task : todoList) {
@@ -127,8 +130,14 @@ public class ToDoscreen {
         newDate.setMaxWidth(Double.MAX_VALUE);
         todoPopupContainer.getChildren().add(newDate);
 
-        TextField newCategory = new TextField();
+        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
+        List<Category> categoryList = Database.getAllCategories(userid);
+        categoryObservableList.addAll(categoryList);
+        ComboBox<Category> newCategory = new ComboBox<>();
+        newCategory.setItems(categoryObservableList);
         newCategory.getStyleClass().add("form--widget");
+        newCategory.getStyleClass().add("form--widget--select");
+        newCategory.setMaxWidth(Double.MAX_VALUE);
         newCategory.setPromptText("Kategorie");
         todoPopupContainer.getChildren().add(newCategory);
 
@@ -145,7 +154,7 @@ public class ToDoscreen {
         newSubmit.setMaxWidth(Double.MAX_VALUE);
         newSubmit.getStyleClass().add("form--submit");
         newSubmit.setOnAction(event -> {
-            createToDo(todoVBox, this.userid, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getText(), String.valueOf(newPriority.getValue()));
+            createToDo(todoVBox, this.userid, newTitle.getText(), newDescripton.getText(), newDate.getValue(), newCategory.getSelectionModel().getSelectedItem().getCategoryID(), String.valueOf(newPriority.getValue()));
             closeStage(todoPopup);
         });
         todoPopupContainer.getChildren().add(newSubmit);
@@ -165,10 +174,10 @@ public class ToDoscreen {
         //ToDO
     }
 
-    private void createToDo(VBox todoVBox, int userID, String title, String description, LocalDate dueday, String category, String priority) {
+    private void createToDo(VBox todoVBox, int userID, String title, String description, LocalDate dueday, int categoryid, String priority) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = dueday.format(formatter);
-        Task task = new Task(userID, title, description, formattedDate, category, priority);
+        Task task = new Task(userID, title, description, formattedDate, categoryid, priority);
 
         task.setTodoID(Database.setNewToDo(task.getUserID(), task.getCategory(), task.getTitle(), task.getDescription(), dueday, task.getPriority()));
         task.setDateFaelligkeitsdatum(task.getDueDay());
@@ -185,6 +194,7 @@ public class ToDoscreen {
         Label todoDescription = new Label(task.getDescription());
         Label todoDueDay = new Label("Fällig am: " + task.getDateFaelligkeitsdatum());
         Label todoPriority = new Label("Priorität: " + task.getPriority());
+        Label todoCategory = new Label("Kategorie: " +task.getCategory() + " " + Database.getCategoryName(task.getCategory()));
 
         Button editTodo = new Button("edit");
         editTodo.setOnAction(e -> actEditTodo());
@@ -195,7 +205,7 @@ public class ToDoscreen {
         ButtonBar buttonBar = new ButtonBar();
         buttonBar.getButtons().addAll(editTodo, deleteTodo);
 
-        container.getChildren().addAll(todoID, todoTitle, todoDescription, todoDueDay, todoPriority, buttonBar);
+        container.getChildren().addAll(todoID, todoTitle, todoDescription, todoDueDay, todoPriority, todoCategory, buttonBar);
         todoVBox.getChildren().add(container);
     }
 
