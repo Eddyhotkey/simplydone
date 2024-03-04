@@ -32,7 +32,6 @@ public class Categoryscreen {
         container.setPrefWidth(700);
         container.setPrefHeight(700);
 
-        categoryList.setMaxSize(700, 700);
         container.setMaxSize(700, 700);
 
         AnchorPane.setTopAnchor(container, (body.getHeight() - container.getHeight()) / 2);
@@ -67,6 +66,7 @@ public class Categoryscreen {
 
         topButtonBar.getButtons().addAll(newTask, exit);
 
+
         body.getChildren().add(topButtonBar);
         AnchorPane.setTopAnchor(topButtonBar, 0.0);
         AnchorPane.setRightAnchor(topButtonBar, 0.0);
@@ -76,9 +76,12 @@ public class Categoryscreen {
         Button newCategorySubmit = new Button("add");
 
         newCategory.setPromptText("Neue Kategorie");
+        newCategoryBar.setAlignment(Pos.CENTER_RIGHT);
+        newCategoryBar.setSpacing(10);
         newCategorySubmit.setOnAction(e -> actNewCategory(categoryList, newCategory.getText()));
 
-        newCategoryBar.getChildren().addAll(newCategorySubmit, newCategory);
+        newCategoryBar.getChildren().addAll(newCategory, newCategorySubmit);
+        newCategoryBar.getStyleClass().add("topbar--padding-bottom");
         container.getChildren().add(newCategoryBar);
 
 
@@ -86,9 +89,11 @@ public class Categoryscreen {
         scrollCategory.setFitToWidth(true);
 
         loadCategories(categoryList);
+        scrollCategory.getStyleClass().addAll("dashboard--background", "category--container");
         container.getChildren().add(scrollCategory);
 
         body.getChildren().add(container);
+        body.getStyleClass().add("dashboard--container");
 
         container.prefWidthProperty().bind(body.widthProperty());
         container.prefHeightProperty().bind(body.heightProperty());
@@ -176,11 +181,17 @@ public class Categoryscreen {
                 deleteShareFromView(sharedUserContainer, singleShare);
         });
         singleShare.getChildren().add(deleteShare);
+        singleShare.getStyleClass().add("single-share");
 
-        Label name = new Label(Database.getUsername(sharingObject.getEmpfängerUserID()));
+        String usernameWithQuotes = Database.getUsername(sharingObject.getEmpfängerUserID());
+
+        Label name = new Label(usernameWithQuotes.replaceAll("\"", ""));
         singleShare.getChildren().add(name);
+        singleShare.setMinWidth(80);
+        singleShare.setAlignment(Pos.CENTER);
 
         sharedUserContainer.getChildren().add(singleShare);
+        sharedUserContainer.setSpacing(10);
     }
 
     protected void deleteShareFromDatabase(int sharedId) {
@@ -218,6 +229,9 @@ public class Categoryscreen {
         deleteCategory.setOnAction(e -> deleteCategory(category.getCategoryID(), categoryVBox, container, sharedUser));
 
         container.getChildren().addAll(categoryID, categoryName, sharedUser, shareCategory, deleteCategory);
+        container.setSpacing(10);
+        container.getStyleClass().add("single--category");
+        container.setAlignment(Pos.CENTER_LEFT);
         categoryVBox.getChildren().add(container);
     }
 
